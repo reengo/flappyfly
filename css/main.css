@@ -1,0 +1,29 @@
+body{
+	width:100%;
+	text-align:center;
+}
+canvas{
+	margin:0 auto;
+	background: black;
+}
+
+.ui{				
+	width: 400px;
+	z-index: 9;
+	margin:0 auto;
+}			
+
+.progressBar{
+	height: 5px;
+	width: 400px;
+	background: #ff0000;
+}
+
+#menu p{
+	position: absolute;
+	bottom: 100px;
+	text-align: center;
+	font: bold 18px arial;
+	padding: 80px;
+	color: #e9e9e9;
+}

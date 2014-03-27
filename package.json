@@ -1,0 +1,27 @@
+{
+  "name": "FlappyFly",
+  "version": "0.1.0",
+  "devDependencies": {
+  },
+  "description": "An experiment based on the popular game. built on CreateJS for practice purposes.",
+  "dependencies": {
+  },
+  "scripts": {
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reengo/flappyfly.git"
+  },
+  "keywords": [
+    "experiment",
+    "game",
+    "createjs",
+    "flappyfly"
+  ],
+  "author": "Ringo Bautista",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/reengo/flappyfly/issues"
+  }
+}

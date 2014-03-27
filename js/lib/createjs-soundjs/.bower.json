@@ -1,0 +1,14 @@
+{
+  "name": "createjs-soundjs",
+  "homepage": "https://github.com/CreateJS/SoundJS",
+  "_release": "7d396d1a84",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7d396d1a84834f361a70facd94c3667862cb3056"
+  },
+  "_source": "git://github.com/CreateJS/SoundJS.git",
+  "_target": "*",
+  "_originalSource": "createjs-soundjs",
+  "_direct": true
+}

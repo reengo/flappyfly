@@ -1,0 +1,12 @@
+{
+  "name": "flappyfly",
+  "dependencies": {},
+  "devDependencies": {
+    "jquery": "~2.1.0",
+    "easeljs": "*",
+    "createjs-tweenjs": "*",
+    "createjs-preloadjs": "*",
+    "createjs-soundjs": "*",
+    "requirejs": "~2.1.11"
+  }
+}
