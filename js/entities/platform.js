@@ -29,7 +29,7 @@ define('Platform', [
 		update : function(){
 			this.velocity.x = this.acceleration;
 			this.x += this.velocity.x;
-			
+
 			if(this.x < this.outside){
 				this.isOutsideLeft = true;
 			}
@@ -56,10 +56,10 @@ define('Platform', [
 			// Setup bounding box
 			this.boundingBox = new createjs.Rectangle(0, 8, this.cols * this.tileWidth, this.rows * this.tileHeight);
 			var boundingBoxGfx = new createjs.Graphics()
-					.beginStroke('red')
 					.drawRect( 
 						this.boundingBox.x, this.boundingBox.y, 
-						this.boundingBox.width, this.boundingBox.height);
+						this.boundingBox.width, this.boundingBox.height
+					);
 
 			var debugBox = new createjs.Shape(boundingBoxGfx);
 					

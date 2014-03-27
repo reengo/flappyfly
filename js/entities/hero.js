@@ -10,8 +10,9 @@ define('Hero',[
 		this.x = 0;
 		this.y = 0;		
 		this.spriteSheet = null;
-		this.acceleration = 0.4;	
+		this.acceleration = 0.8;	
 		this.velocity = {x: 0, y: 0};
+		this.controlOff = false;
 
 		for(var prop in opts){		
 			this[prop] = opts[prop];		
@@ -20,10 +21,8 @@ define('Hero',[
 		this.alive = true;
 		this.onGround = false;
 
-		// setup bounding box with an offset of x: 20, y: 20
 		this.boundingBox = new createjs.Rectangle(20, 20, this.width, this.height);
-
-		// Bounding box graphics					
+	
 		var boundingBoxGfx = new createjs.Graphics()
 			.drawRect(this.boundingBox.x, 
 					this.boundingBox.y, 
@@ -31,12 +30,9 @@ define('Hero',[
 					this.boundingBox.height);
 		var debugBox = new createjs.Shape(boundingBoxGfx);
 		
-		
-		// setup animation
 		this.animation = new createjs.Sprite(this.spriteSheet);
 		this.animation.gotoAndPlay('fly');
 		
-		// Create our graphics container
 		this.graphics = new createjs.Container();		
 		this.graphics.addChild(this.animation, debugBox);
 
@@ -85,8 +81,6 @@ define('Hero',[
 			this.velocity.y = -10;
 		},
 		collide : function(objB, data){
-		    //check if the hero collided from the top/bottom 
-		    //or from the sides
 			if(data.width < data.height){
 				this._separateX(objB, data);
 			}else{
@@ -97,13 +91,13 @@ define('Hero',[
 			var overlap = data.width;
 			var objBX = objB.getFuturePosition().x;		
 
-			if(objBX > this.x){
-				//Collided on 'right';			
-				this.x -= overlap;        
-		                //'absorb' the velocity of the collided object
+			if(objBX > this.x){		
+				this.x -= overlap; 
 				this.velocity.x = objB.velocity.x;
+
+				this.hit = true;
+				this.controlOff = true;
 			}else{
-				//Collided on 'left';
 				this.x += overlap;
 			}
 		},
@@ -111,10 +105,10 @@ define('Hero',[
 			var overlap = data.height;	
 
 			if(overlap > 1 ){
-				//Collided on bottom
 				this.y = (objB.y + objB.boundingBox.y) - this.boundingBox.height - this.boundingBox.y;
 				this.velocity.y = 0;	
 
+				this.hit = true;
 				this.alive = false;
 			}
 		}

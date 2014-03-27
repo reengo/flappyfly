@@ -9,7 +9,8 @@ define('Preloader', [
 		{src:'assets/ground.gif', id: 'ground'},
 		{src:'assets/platform.png', id: 'platforms'},
 		{src:'assets/fly.wav', id:'fly_snd'},
-		{src:'assets/slap.mp3', id:'slap_snd'}
+		{src:'assets/slap.mp3', id:'slap_snd'},
+		{src:'assets/score.mp3', id:'score_snd'}
 	];
 
 	var Preloader = {

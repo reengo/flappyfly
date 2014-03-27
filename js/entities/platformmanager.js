@@ -11,7 +11,6 @@ define("PlatformManager", [
 			this[prop] = opts[prop];		
 		}		
 
-		//precreate the platforms to memory
 		var groundPlatform = new Platform({
 			tilesheet : '',
 			rows : 10,
@@ -25,7 +24,7 @@ define("PlatformManager", [
 			tilesheet : this.bitmap,
 			rows : 10,
 			cols : 3,
-			y : 330,
+			y : 10000,
 			acceleration : this.acceleration
 		});
 
@@ -38,17 +37,15 @@ define("PlatformManager", [
 			acceleration : this.acceleration
 		});
 		
-		//put the platforms in a list
 		this.collidables.push(groundPlatform);
 		this.collidables.push(startPlatform);
 		this.collidables.push(platform2);
 
-		// add platform graphics to display list
 		this.graphics = new createjs.Container();
 		for(var i in this.collidables){
 			this.graphics.addChild( this.collidables[i].graphics );
 		}
-		//keep a reference to the last platform
+
 		this.lastPlatformIndex = this.collidables.length - 1;
 
 		this.graphics.x = this.x;
@@ -57,17 +54,13 @@ define("PlatformManager", [
 
 	PlatformManager.prototype = {
 		update : function(){			
-			/* loop through objects */
 			for(var i in this.collidables){				
 				this.collidables[i].update();
 
-				// if a platform is on the left offscreen
 				if(this.collidables[i].isOutsideLeft){
-					//move the left platform to the back of the last platform
 					var lastPlatform = this.collidables[this.lastPlatformIndex];
 					var lastX = lastPlatform.x + lastPlatform.width;
 
-				    //get a random shape
 					this.collidables[i].reset({
 						cols: 3,
 						rows: 5,
@@ -78,7 +71,6 @@ define("PlatformManager", [
 			}
 		},
 		render : function(){
-			//render
 			for(var i in this.collidables){
 				this.collidables[i].render();
 			}	

@@ -26,14 +26,17 @@ define('Play',[
 			//render the hero next
 			this.renderHero();	
 
+			this.renderScore();
+
 			//render platforms
 			this.renderPlatforms();
 			//set FPS and start listening to game ticks
 			createjs.Ticker.setFPS( this.settings.speed );
 			createjs.Ticker.addEventListener( 'tick', this.tick );
+
 		},
 		exit : function(){
-			console.log('ITS GAME OVER');
+			this.onExit();
 		},
 		tick : function( e ){
 			if(Play.hero.alive){
@@ -45,8 +48,8 @@ define('Play',[
 
 				//update			
 				Play.collideWithGroup(Play.hero, Play.platformManager);
-				Play.hero.update();		
-				Play.hero.render();
+				Play.hero.update();
+				Play.hero.render();	
 				Play.platformManager.update();
 				Play.platformManager.render();	
 				for(var i in Play.parallaxLayer){
@@ -55,15 +58,22 @@ define('Play',[
 				}	
 			}else{
 				//show death state
-				createjs.Sound.play('slap_snd');
 				Play.gameOver = true;
-				//Play.hero.stop();		
+				Play.hero.stop();		
 				Play.exit();
 			}
-			
 
-						
+			if(Play.hero.hit){	
+				createjs.Sound.play("slap_snd", null, 0, 140, 0, 1, -20);
+				Play.hero.hit = false;
+			}
 
+			for ( collidable in Play.platformManager.collidables ){
+				if( Play.platformManager.collidables[collidable].x == Play.hero.x ){
+					Play.score.text += 1;
+					createjs.Sound.play('score_snd');
+				}
+			}
 			Play.stage.update();
 		},
 		renderHero : function(){
@@ -142,8 +152,16 @@ define('Play',[
 			//render it to stage
 			this.stage.addChild( this.platformManager.graphics );
 		},
+		renderScore: function(){
+			this.score = new createjs.Text(0, "bold 70px Arial", "white"); 
+			this.score.y = 100; 
+			this.score.x = 180; 
+			this.score.textBaseline = "alphabetic";
+
+			this.stage.addChild( this.score );
+		},
 		handleInput : function(){
-			Play.jumpClicked = true;
+			Play.jumpClicked = Play.hero.controlOff == false ? true : false;
 		},
 		collideWithGroup : function(objA, objB){			
 			var groupB = objB.collidables;
