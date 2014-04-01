@@ -1,0 +1,3297 @@
+{
+    "project": {
+        "name": "PreloadJS",
+        "version": "0.4.1",
+        "description": "PreloadJS Docs",
+        "url": "http://www.createjs.com/#!/PreloadJS",
+        "logo": "assets/docs-icon-PreloadJS.png"
+    },
+    "files": {
+        "createjs/events/Event.js": {
+            "name": "createjs/events/Event.js",
+            "modules": {
+                "CreateJS": 1
+            },
+            "classes": {
+                "Event": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "createjs/events/EventDispatcher.js": {
+            "name": "createjs/events/EventDispatcher.js",
+            "modules": {},
+            "classes": {
+                "EventDispatcher": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "createjs/utils/IndexOf.js": {
+            "name": "createjs/utils/IndexOf.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "createjs/utils/Proxy.js": {
+            "name": "createjs/utils/Proxy.js",
+            "modules": {},
+            "classes": {
+                "Utility Methods": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/AbstractLoader.js": {
+            "name": "preloadjs/AbstractLoader.js",
+            "modules": {},
+            "classes": {
+                "AbstractLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/LoadQueue.js": {
+            "name": "preloadjs/LoadQueue.js",
+            "modules": {
+                "PreloadJS": 1
+            },
+            "classes": {
+                "LoadQueue": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/SamplePlugin.js": {
+            "name": "preloadjs/SamplePlugin.js",
+            "modules": {},
+            "classes": {
+                "SamplePlugin": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/TagLoader.js": {
+            "name": "preloadjs/TagLoader.js",
+            "modules": {},
+            "classes": {
+                "TagLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/XHRLoader.js": {
+            "name": "preloadjs/XHRLoader.js",
+            "modules": {},
+            "classes": {
+                "XHRLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "preloadjs/version.js": {
+            "name": "preloadjs/version.js",
+            "modules": {},
+            "classes": {
+                "PreloadJS": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "CreateJS": {
+            "name": "CreateJS",
+            "submodules": {},
+            "classes": {
+                "Event": 1,
+                "EventDispatcher": 1,
+                "Utility Methods": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "createjs/utils/Proxy.js",
+            "line": 36,
+            "description": "A collection of Classes that are shared across all the CreateJS libraries.  The classes are included in the minified\nfiles of each library and are available on the createsjs namespace directly.\n\n<h4>Example</h4>\n     myObject.addEventListener(\"change\", createjs.proxy(myMethod, scope));",
+            "itemtype": "main"
+        },
+        "PreloadJS": {
+            "name": "PreloadJS",
+            "submodules": {},
+            "classes": {
+                "AbstractLoader": 1,
+                "LoadQueue": 1,
+                "SamplePlugin": 1,
+                "TagLoader": 1,
+                "XHRLoader": 1,
+                "PreloadJS": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "preloadjs/version.js",
+            "line": 6,
+            "description": "PreloadJS provides a consistent way to preload content for use in HTML applications. Preloading can be done using\nHTML tags, as well as XHR.\n\nBy default, PreloadJS will try and load content using XHR, since it provides better support for progress and\ncompletion events, <b>however due to cross-domain issues, it may still be preferable to use tag-based loading\ninstead</b>. Note that some content requires XHR to work (plain text, web audio), and some requires tags (HTML audio).\nNote this is handled automatically where possible.\n\nPreloadJS currently supports all modern browsers, and we have done our best to include support for most older\nbrowsers. If you find an issue with any specific OS/browser combination, please visit http://community.createjs.com/\nand report it.\n\n<h4>Getting Started</h4>\nTo get started, check out the {{#crossLink \"LoadQueue\"}}{{/crossLink}} class, which includes a quick overview of how\nto load files and process results.\n\n<h4>Example</h4>\n\n     var queue = new createjs.LoadQueue();\n     queue.installPlugin(createjs.Sound);\n     queue.on(\"complete\", handleComplete, this);\n     queue.loadFile({id:\"sound\", src:\"http://path/to/sound.mp3\"});\n     queue.loadManifest([\n         {id: \"myImage\", src:\"path/to/myImage.jpg\"}\n     ]);\n     function handleComplete() {\n         createjs.Sound.play(\"sound\");\n         var image = queue.getResult(\"myImage\");\n         document.body.appendChild(image);\n     }\n\n<b>Important note on plugins:</b> Plugins must be installed <i>before</i> items are added to the queue, otherwise\nthey will not be processed, even if the load has not actually kicked off yet. Plugin functionality is handled when\nthe items are added to the LoadQueue.\n\n<h4>Browser Support</h4>\nPreloadJS is partially supported in all browsers, and fully supported in all modern browsers. Known exceptions:\n<ul><li>XHR loading of any content will not work in many older browsers (See a matrix here: <a href=\"http://caniuse.com/xhr2\" target=\"_blank\">http://caniuse.com/xhr2</a>).\n     In many cases, you can fall back on tag loading (images, audio, CSS, scripts, SVG, and JSONP). Text and\n     WebAudio will only work with XHR.</li>\n     <li>Some formats have poor support for complete events in IE 6, 7, and 8 (SVG, tag loading of scripts, XML/JSON)</li>\n     <li>Opera has poor support for SVG loading with XHR</li>\n     <li>CSS loading in Android and Safari will not work with tags (currently, a workaround is in progress)</li>\n     <li>Local loading is not permitted with XHR, which is required by some file formats. When testing local content\n     use either a local server, or enable tag loading, which is supported for most formats. See {{#crossLink \"LoadQueue/setUseXHR\"}}{{/crossLink}}\n     for more information.</li>\n</ul>\n\n<h4>Cross-domain Loading</h4>\nMost content types can be loaded cross-domain, as long as the server supports CORS. PreloadJS also has internal\nsupport for images served from a CORS-enabled server, via the `crossOrigin` argument on the {{#crossLink \"LoadQueue\"}}{{/crossLink}}\nconstructor. If set to a string value (such as \"Anonymous\"), the \"crossOrigin\" property of images generated by\nPreloadJS is set to that value. Please note that setting a `crossOrigin` value on an image that is served from a\nserver without CORS will cause other errors. For more info on CORS, visit https://en.wikipedia.org/wiki/Cross-origin_resource_sharing.",
+            "itemtype": "main"
+        }
+    },
+    "classes": {
+        "Event": {
+            "name": "Event",
+            "shortname": "Event",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CreateJS",
+            "namespace": "",
+            "file": "createjs/events/Event.js",
+            "line": 46,
+            "description": "Contains properties and methods shared by all events for use with\n{{#crossLink \"EventDispatcher\"}}{{/crossLink}}.\n\nNote that Event objects are often reused, so you should never\nrely on an event object's state outside of the call stack it was received in.",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "bubbles",
+                    "description": "Indicates whether the event will bubble through the display list.",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "cancelable",
+                    "description": "Indicates whether the default behaviour of this event can be cancelled.",
+                    "type": "Boolean"
+                }
+            ],
+            "is_constructor": 1
+        },
+        "EventDispatcher": {
+            "name": "EventDispatcher",
+            "shortname": "EventDispatcher",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CreateJS",
+            "namespace": "",
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 39,
+            "description": "EventDispatcher provides methods for managing queues of event listeners and dispatching events.\n\nYou can either extend EventDispatcher or mix its methods into an existing prototype or instance by using the\nEventDispatcher {{#crossLink \"EventDispatcher/initialize\"}}{{/crossLink}} method.\n\nTogether with the CreateJS Event class, EventDispatcher provides an extended event model that is based on the\nDOM Level 2 event model, including addEventListener, removeEventListener, and dispatchEvent. It supports\nbubbling / capture, preventDefault, stopPropagation, stopImmediatePropagation, and handleEvent.\n\nEventDispatcher also exposes a {{#crossLink \"EventDispatcher/on\"}}{{/crossLink}} method, which makes it easier\nto create scoped listeners, listeners that only run once, and listeners with associated arbitrary data. The \n{{#crossLink \"EventDispatcher/off\"}}{{/crossLink}} method is merely an alias to\n{{#crossLink \"EventDispatcher/removeEventListener\"}}{{/crossLink}}.\n\nAnother addition to the DOM Level 2 model is the {{#crossLink \"EventDispatcher/removeAllEventListeners\"}}{{/crossLink}}\nmethod, which can be used to listeners for all events, or listeners for a specific event. The Event object also \nincludes a {{#crossLink \"Event/remove\"}}{{/crossLink}} method which removes the active listener.\n\n<h4>Example</h4>\nAdd EventDispatcher capabilities to the \"MyClass\" class.\n\n     EventDispatcher.initialize(MyClass.prototype);\n\nAdd an event (see {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}}).\n\n     instance.addEventListener(\"eventName\", handlerMethod);\n     function handlerMethod(event) {\n         console.log(event.target + \" Was Clicked\");\n     }\n\n<b>Maintaining proper scope</b><br />\nScope (ie. \"this\") can be be a challenge with events. Using the {{#crossLink \"EventDispatcher/on\"}}{{/crossLink}}\nmethod to subscribe to events simplifies this.\n\n     instance.addEventListener(\"click\", function(event) {\n         console.log(instance == this); // false, scope is ambiguous.\n     });\n     \n     instance.on(\"click\", function(event) {\n         console.log(instance == this); // true, \"on\" uses dispatcher scope by default.\n     });\n\nIf you want to use addEventListener instead, you may want to use function.bind() or a similar proxy to manage scope.",
+            "is_constructor": 1
+        },
+        "Utility Methods": {
+            "name": "Utility Methods",
+            "shortname": "Utility Methods",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CreateJS",
+            "namespace": "",
+            "file": "createjs/utils/Proxy.js",
+            "line": 36,
+            "description": "Various utilities that the CreateJS Suite uses. Utilities are created as separate files, and will be available on the\ncreatejs namespace directly:\n\n<h4>Example</h4>\n     myObject.addEventListener(\"change\", createjs.proxy(myMethod, scope));",
+            "mainName": "Utility Methods",
+            "tag": "main",
+            "itemtype": "main",
+            "_main": true
+        },
+        "AbstractLoader": {
+            "name": "AbstractLoader",
+            "shortname": "AbstractLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 39,
+            "description": "The base loader, which defines all the generic callbacks and events. All loaders extend this class, including the\n{{#crossLink \"LoadQueue\"}}{{/crossLink}}.",
+            "extends": "EventDispatcher"
+        },
+        "LoadQueue": {
+            "name": "LoadQueue",
+            "shortname": "LoadQueue",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/LoadQueue.js",
+            "line": 107,
+            "description": "The LoadQueue class is the main API for preloading content. LoadQueue is a load manager, which can preload either\na single file, or queue of files.\n\n<b>Creating a Queue</b><br />\nTo use LoadQueue, create a LoadQueue instance. If you want to force tag loading where possible, set the useXHR\nargument to false.\n\n     var queue = new createjs.LoadQueue(true);\n\n<b>Listening for Events</b><br />\nAdd any listeners you want to the queue. Since PreloadJS 0.3.0, the {{#crossLink \"EventDispatcher\"}}{{/crossLink}}\nlets you add as many listeners as you want for events. You can subscribe to the following events:<ul>\n    <li>{{#crossLink \"AbstractLoader/complete:event\"}}{{/crossLink}}: fired when a queue completes loading all\n    files</li>\n    <li>{{#crossLink \"AbstractLoader/error:event\"}}{{/crossLink}}: fired when the queue encounters an error with\n    any file.</li>\n    <li>{{#crossLink \"AbstractLoader/progress:event\"}}{{/crossLink}}: Progress for the entire queue has\n    changed.</li>\n    <li>{{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}}: A single file has completed loading.</li>\n    <li>{{#crossLink \"LoadQueue/fileprogress:event\"}}{{/crossLink}}: Progress for a single file has changes. Note\n    that only files loaded with XHR (or possibly by plugins) will fire progress events other than 0 or 100%.</li>\n</ul>\n\n     queue.on(\"fileload\", handleFileLoad, this);\n     queue.on(\"complete\", handleComplete, this);\n\n<b>Adding files and manifests</b><br />\nAdd files you want to load using {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} or add multiple files at a\ntime using a list or a manifest definition using {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}. Files are\nappended to the end of the active queue, so you can use these methods as many times as you like, whenever you\nlike.\n\n     queue.loadFile(\"filePath/file.jpg\");\n     queue.loadFile({id:\"image\", src:\"filePath/file.jpg\"});\n     queue.loadManifest([\"filePath/file.jpg\", {id:\"image\", src:\"filePath/file.jpg\"}];\n\nIf you pass `false` as the `loadNow` parameter, the queue will not kick of the load of the files, but it will not\nstop if it has already been started. Call the {{#crossLink \"AbstractLoader/load\"}}{{/crossLink}} method to begin\na paused queue. Note that a paused queue will automatically resume when new files are added to it with a\n`loadNow` argument of `true`.\n\n     queue.load();\n\n<b>File Types</b><br />\nThe file type of a manifest item is auto-determined by the file extension. The pattern matching in PreloadJS\nshould handle the majority of standard file and url formats, and works with common file extensions. If you have\neither a non-standard file extension, or are serving the file using a proxy script, then you can pass in a\n<code>type</code> property with any manifest item.\n\n     queue.loadFile({src:\"path/to/myFile.mp3x\", type:createjs.LoadQueue.SOUND});\n\n     // Note that PreloadJS will not read a file extension from the query string\n     queue.loadFile({src:\"http://server.com/proxy?file=image.jpg\"}, type:createjs.LoadQueue.IMAGE});\n\nSupported types are defined on the LoadQueue class, and include:\n<ul>\n    <li>{{#crossLink \"LoadQueue/BINARY:property\"}}{{/crossLink}}: Raw binary data via XHR</li>\n    <li>{{#crossLink \"LoadQueue/CSS:property\"}}{{/crossLink}}: CSS files</li>\n    <li>{{#crossLink \"LoadQueue/IMAGE:property\"}}{{/crossLink}}: Common image formats</li>\n    <li>{{#crossLink \"LoadQueue/JAVASCRIPT:property\"}}{{/crossLink}}: JavaScript files</li>\n    <li>{{#crossLink \"LoadQueue/JSON:property\"}}{{/crossLink}}: JSON data</li>\n    <li>{{#crossLink \"LoadQueue/JSONP:property\"}}{{/crossLink}}: JSON files cross-domain</li>\n    <li>{{#crossLink \"LoadQueue/MANIFEST:property\"}}{{/crossLink}}: A list of files to load in JSON format, see\n    {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}</li>\n    <li>{{#crossLink \"LoadQueue/SOUND:property\"}}{{/crossLink}}: Audio file formats</li>\n    <li>{{#crossLink \"LoadQueue/SVG:property\"}}{{/crossLink}}: SVG files</li>\n    <li>{{#crossLink \"LoadQueue/TEXT:property\"}}{{/crossLink}}: Text files - XHR only</li>\n    <li>{{#crossLink \"LoadQueue/XML:property\"}}{{/crossLink}}: XML data</li>\n</ul>\n\n<b>Handling Results</b><br />\nWhen a file is finished downloading, a {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}} event is\ndispatched. In an example above, there is an event listener snippet for fileload. Loaded files are usually a\nresolved object that can be used immediately, including:\n<ul>\n    <li>Image: An &lt;img /&gt; tag</li>\n    <li>Audio: An &lt;audio /&gt; tag</a>\n    <li>JavaScript: A &lt;script /&gt; tag</li>\n    <li>CSS: A &lt;link /&gt; tag</li>\n    <li>XML: An XML DOM node</li>\n    <li>SVG: An &lt;object /&gt; tag</li>\n    <li>JSON: A formatted JavaScript Object</li>\n    <li>Text: Raw text</li>\n    <li>Binary: The binary loaded result</li>\n</ul>\n\n     function handleFileLoad(event) {\n         var item = event.item; // A reference to the item that was passed in to the LoadQueue\n         var type = item.type;\n\n         // Add any images to the page body.\n         if (type == createjs.LoadQueue.IMAGE) {\n             document.body.appendChild(event.result);\n         }\n     }\n\nAt any time after the file has been loaded (usually after the queue has completed), any result can be looked up\nvia its \"id\" using {{#crossLink \"LoadQueue/getResult\"}}{{/crossLink}}. If no id was provided, then the \"src\" or\nfile path can be used instead, including the `path` defined by a manifest, but <strong>not including</strong> a\nbase path defined on the LoadQueue. It is recommended to always pass an id.\n\n     var image = queue.getResult(\"image\");\n     document.body.appendChild(image);\n\nRaw loaded content can be accessed using the <code>rawResult</code> property of the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}}\nevent, or can be looked up using {{#crossLink \"LoadQueue/getResult\"}}{{/crossLink}}, passing `true` as the 2nd\nargument. This is only applicable for content that has been parsed for the browser, specifically: JavaScript,\nCSS, XML, SVG, and JSON objects, or anything loaded with XHR.\n\n     var image = queue.getResult(\"image\", true); // load the binary image data loaded with XHR.\n\n<b>Plugins</b><br />\nLoadQueue has a simple plugin architecture to help process and preload content. For example, to preload audio,\nmake sure to install the <a href=\"http://soundjs.com\">SoundJS</a> Sound class, which will help load HTML audio,\nFlash audio, and WebAudio files. This should be installed <strong>before</strong> loading any audio files.\n\n     queue.installPlugin(createjs.Sound);\n\n<h4>Known Browser Issues</h4>\n<ul>\n    <li>Browsers without audio support can not load audio files.</li>\n    <li>Safari on Mac OS X can only play HTML audio if QuickTime is installed</li>\n    <li>HTML Audio tags will only download until their <code>canPlayThrough</code> event is fired. Browsers other\n    than Chrome will continue to download in the background.</li>\n    <li>When loading scripts using tags, they are automatically added to the document.</li>\n    <li>Scripts loaded via XHR may not be properly inspectable with browser tools.</li>\n    <li>IE6 and IE7 (and some other browsers) may not be able to load XML, Text, or JSON, since they require\n    XHR to work.</li>\n    <li>Content loaded via tags will not show progress, and will continue to download in the background when\n    canceled, although no events will be dispatched.</li>\n</ul>",
+            "params": [
+                {
+                    "name": "useXHR",
+                    "description": "Determines whether the preload instance will favor loading with XHR (XML HTTP\nRequests), or HTML tags. When this is `false`, the queue will use tag loading when possible, and fall back on XHR\nwhen necessary.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                },
+                {
+                    "name": "basePath",
+                    "description": "A path that will be prepended on to the source parameter of all items in the queue\nbefore they are loaded.  Sources beginning with a protocol such as `http://` or a relative path such as `../`\nwill not receive a base path.",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "\"\""
+                },
+                {
+                    "name": "crossOrigin",
+                    "description": "An optional flag to support images loaded from a CORS-enabled server. To\nuse it, set this value to `true`, which will default the crossOrigin property on images to \"Anonymous\". Any\nstring value will be passed through, but only \"\" and \"Anonymous\" are recommended.",
+                    "type": "String|Boolean",
+                    "optional": true,
+                    "optdefault": "\"\""
+                }
+            ],
+            "is_constructor": 1,
+            "extends": "AbstractLoader"
+        },
+        "SamplePlugin": {
+            "name": "SamplePlugin",
+            "shortname": "SamplePlugin",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/SamplePlugin.js",
+            "line": 5,
+            "description": "A PreloadJS plugin provides a way to inject functionality into PreloadJS to load file types that are unsupported,\nor in a way that PreloadJS does not.\n\n<strong>Note that this class is mainly for documentation purposes, and is not a real plugin.</strong>\n\nPlugins are registered based on file extension, or supported preload types, which are defined as constants on\nthe {{#crossLink \"LoadQueue\"}}{{/crossLink}} class. Available load types are:\n<ul>\n    <li>binary ({{#crossLink \"LoadQueue/BINARY:property\"}}{{/crossLink}})</li>\n    <li>image ({{#crossLink \"LoadQueue/IMAGE:property\"}}{{/crossLink}})</li>\n    <li>javascript ({{#crossLink \"LoadQueue/JAVASCRIPT:property\"}}{{/crossLink}})</li>\n    <li>json ({{#crossLink \"LoadQueue/JSON:property\"}}{{/crossLink}})</li>\n    <li>jsonp ({{#crossLink \"LoadQueue/JSONP:property\"}}{{/crossLink}})</li>\n    <li>sound ({{#crossLink \"LoadQueue/SOUND:property\"}}{{/crossLink}})</li>\n    <li>svg ({{#crossLink \"LoadQueue/SVG:property\"}}{{/crossLink}})</li>\n    <li>text ({{#crossLink \"LoadQueue/TEXT:property\"}}{{/crossLink}})</li>\n    <li>xml ({{#crossLink \"LoadQueue/XML:property\"}}{{/crossLink}})</li>\n</ul>\n\nA plugin defines what types or extensions it handles via a {{#crossLink \"SamplePlugin/getPreloadHandlers\"}}{{/crossLink}}\nmethod, which is called when a plugin is first registered.\n\nTo register a plugin with PreloadJS, simply install it into a LoadQueue before files begin to load using the\n{{#crossLink \"LoadQueue/installPlugin\"}}{{/crossLink}} method:\n\n     var queue = new createjs.LoadQueue();\n     queue.installPlugin(createjs.SamplePlugin);\n     queue.loadFile(\"test.jpg\");\n\nThe {{#crossLink \"SamplePlugin/getPreloadHandlers\"}}{{/crossLink}} method can also return a `callback`\nproperty, which is a function that will be invoked before each file is loaded. Check out the {{#crossLink \"SamplePlugin/preloadHandler\"}}{{/crossLink}}\nfor more information on how the callback works.\n\nFor example, the SoundJS plugin allows PreloadJS to manage a download that\nhappens in Flash",
+            "static": 1
+        },
+        "TagLoader": {
+            "name": "TagLoader",
+            "shortname": "TagLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/TagLoader.js",
+            "line": 39,
+            "description": "A preloader that loads items using a tag-based approach. HTML audio and images can use this loader to load\ncontent cross-domain without security errors, whereas anything loaded with XHR has potential issues with cross-\ndomain requests.\n\nNote for audio tags, TagLoader relies on the <code>canPlayThrough</code> event, which fires when the buffer\nis full enough to play the audio all the way through at the current download speed. This completely preloads most\nsound effects, however longer tracks like background audio will only load a portion before the event is fired.\nMost browsers (all excluding Chrome) will continue to preload once this is fired, so this is considered good\nenough for most cases.",
+            "is_constructor": 1,
+            "extends": "AbstractLoader",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The item to load. Please see {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} for\ninformation on load items.",
+                    "type": "Object"
+                }
+            ]
+        },
+        "XHRLoader": {
+            "name": "XHRLoader",
+            "shortname": "XHRLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/XHRLoader.js",
+            "line": 40,
+            "description": "A preloader that loads items using XHR requests, usually XMLHttpRequest. However XDomainRequests will be used\nfor cross-domain requests if possible, and older versions of IE fall back on to ActiveX objects when necessary.\nXHR requests load the content as text or binary data, provide progress and consistent completion events, and\ncan be canceled during load. Note that XHR is not supported in IE 6 or earlier, and is not recommended for\ncross-domain loading.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The object that defines the file to load. Please see the {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}\nfor an overview of supported file properties.",
+                    "type": "Object"
+                },
+                {
+                    "name": "crossOrigin",
+                    "description": "An optional flag to support images loaded from a CORS-enabled server. Please see\n{{#crossLink \"LoadQueue/_crossOrigin:property\"}}{{/crossLink}} for more info.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "extends": "AbstractLoader"
+        },
+        "PreloadJS": {
+            "name": "PreloadJS",
+            "shortname": "PreloadJS",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PreloadJS",
+            "namespace": "",
+            "file": "preloadjs/version.js",
+            "line": 6,
+            "description": "Static class holding library specific information such as the version and buildDate of\nthe library.\n\nThe old PreloadJS class has been renamed to LoadQueue. Please see the {{#crossLink \"LoadQueue\"}}{{/crossLink}}\nclass for information on loading files."
+        }
+    },
+    "classitems": [
+        {
+            "file": "createjs/events/Event.js",
+            "line": 67,
+            "description": "The type of event.",
+            "itemtype": "property",
+            "name": "type",
+            "type": "String",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 74,
+            "description": "The object that generated an event.",
+            "itemtype": "property",
+            "name": "target",
+            "type": "Object",
+            "default": "null",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 83,
+            "description": "The current target that a bubbling event is being dispatched from. For non-bubbling events, this will\nalways be the same as target. For example, if childObj.parent = parentObj, and a bubbling event\nis generated from childObj, then a listener on parentObj would receive the event with\ntarget=childObj (the original target) and currentTarget=parentObj (where the listener was added).",
+            "itemtype": "property",
+            "name": "currentTarget",
+            "type": "Object",
+            "default": "null",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 95,
+            "description": "For bubbling events, this indicates the current event phase:<OL>\n\t<LI> capture phase: starting from the top parent to the target</LI>\n\t<LI> at target phase: currently being dispatched from the target</LI>\n\t<LI> bubbling phase: from the target to the top parent</LI>\n</OL>",
+            "itemtype": "property",
+            "name": "eventPhase",
+            "type": "Number",
+            "default": "0",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 108,
+            "description": "Indicates whether the event will bubble through the display list.",
+            "itemtype": "property",
+            "name": "bubbles",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 117,
+            "description": "Indicates whether the default behaviour of this event can be cancelled via\n{{#crossLink \"Event/preventDefault\"}}{{/crossLink}}. This is set via the Event constructor.",
+            "itemtype": "property",
+            "name": "cancelable",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 127,
+            "description": "The epoch time at which this event was created.",
+            "itemtype": "property",
+            "name": "timeStamp",
+            "type": "Number",
+            "default": "0",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 136,
+            "description": "Indicates if {{#crossLink \"Event/preventDefault\"}}{{/crossLink}} has been called\non this event.",
+            "itemtype": "property",
+            "name": "defaultPrevented",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 146,
+            "description": "Indicates if {{#crossLink \"Event/stopPropagation\"}}{{/crossLink}} or\n{{#crossLink \"Event/stopImmediatePropagation\"}}{{/crossLink}} has been called on this event.",
+            "itemtype": "property",
+            "name": "propagationStopped",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 156,
+            "description": "Indicates if {{#crossLink \"Event/stopImmediatePropagation\"}}{{/crossLink}} has been called\non this event.",
+            "itemtype": "property",
+            "name": "immediatePropagationStopped",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 166,
+            "description": "Indicates if {{#crossLink \"Event/remove\"}}{{/crossLink}} has been called on this event.",
+            "itemtype": "property",
+            "name": "removed",
+            "type": "Boolean",
+            "default": "false",
+            "readonly": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 176,
+            "description": "Initialization method.",
+            "itemtype": "method",
+            "name": "initialize",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "bubbles",
+                    "description": "Indicates whether the event will bubble through the display list.",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "cancelable",
+                    "description": "Indicates whether the default behaviour of this event can be cancelled.",
+                    "type": "Boolean"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 193,
+            "description": "Sets {{#crossLink \"Event/defaultPrevented\"}}{{/crossLink}} to true.\nMirrors the DOM event standard.",
+            "itemtype": "method",
+            "name": "preventDefault",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 202,
+            "description": "Sets {{#crossLink \"Event/propagationStopped\"}}{{/crossLink}} to true.\nMirrors the DOM event standard.",
+            "itemtype": "method",
+            "name": "stopPropagation",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 211,
+            "description": "Sets {{#crossLink \"Event/propagationStopped\"}}{{/crossLink}} and\n{{#crossLink \"Event/immediatePropagationStopped\"}}{{/crossLink}} to true.\nMirrors the DOM event standard.",
+            "itemtype": "method",
+            "name": "stopImmediatePropagation",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 221,
+            "description": "Causes the active listener to be removed via removeEventListener();\n\n\t\tmyBtn.addEventListener(\"click\", function(evt) {\n\t\t\t// do stuff...\n\t\t\tevt.remove(); // removes this listener.\n\t\t});",
+            "itemtype": "method",
+            "name": "remove",
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 235,
+            "description": "Returns a clone of the Event instance.",
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "a clone of the Event instance.",
+                "type": "Event"
+            },
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/Event.js",
+            "line": 244,
+            "description": "Returns a string representation of this object.",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "a string representation of the instance.",
+                "type": "String"
+            },
+            "class": "Event",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 94,
+            "description": "Static initializer to mix EventDispatcher methods into a target object or prototype.\n\n\t\tEventDispatcher.initialize(MyClass.prototype); // add to the prototype of the class\n\t\tEventDispatcher.initialize(myObject); // add to a specific instance",
+            "itemtype": "method",
+            "name": "initialize",
+            "static": 1,
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The target object to inject EventDispatcher methods into. This can be an instance or a\nprototype.",
+                    "type": "Object"
+                }
+            ],
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 119,
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_listeners",
+            "type": "Object",
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 126,
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_captureListeners",
+            "type": "Object",
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 134,
+            "description": "Initialization method.",
+            "itemtype": "method",
+            "name": "initialize",
+            "access": "protected",
+            "tagname": "",
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 142,
+            "description": "Adds the specified event listener. Note that adding multiple listeners to the same function will result in\nmultiple callbacks getting fired.\n\n<h4>Example</h4>\n\n     displayObject.addEventListener(\"click\", handleClick);\n     function handleClick(event) {\n        // Click happened.\n     }",
+            "itemtype": "method",
+            "name": "addEventListener",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "An object with a handleEvent method, or a function that will be called when\nthe event is dispatched.",
+                    "type": "Function | Object"
+                },
+                {
+                    "name": "useCapture",
+                    "description": "For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns the listener for chaining or assignment.",
+                "type": "Function | Object"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 175,
+            "description": "A shortcut method for using addEventListener that makes it easier to specify an execution scope, have a listener\nonly run once, associate arbitrary data with the listener, and remove the listener.\n\nThis method works by creating an anonymous wrapper function and subscribing it with addEventListener.\nThe created anonymous function is returned for use with .removeEventListener (or .off).\n\n<h4>Example</h4>\n\n\t\tvar listener = myBtn.on(\"click\", handleClick, null, false, {count:3});\n\t\tfunction handleClick(evt, data) {\n\t\t\tdata.count -= 1;\n\t\t\tconsole.log(this == myBtn); // true - scope defaults to the dispatcher\n\t\t\tif (data.count == 0) {\n\t\t\t\talert(\"clicked 3 times!\");\n\t\t\t\tmyBtn.off(\"click\", listener);\n\t\t\t\t// alternately: evt.remove();\n\t\t\t}\n\t\t}",
+            "itemtype": "method",
+            "name": "on",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "An object with a handleEvent method, or a function that will be called when\nthe event is dispatched.",
+                    "type": "Function | Object"
+                },
+                {
+                    "name": "scope",
+                    "description": "The scope to execute the listener in. Defaults to the dispatcher/currentTarget for function listeners, and to the listener itself for object listeners (ie. using handleEvent).",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "once",
+                    "description": "If true, the listener will remove itself after the first time it is triggered.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "data",
+                    "description": "Arbitrary data that will be included as the second parameter when the listener is called.",
+                    "type": "*",
+                    "optional": true
+                },
+                {
+                    "name": "useCapture",
+                    "description": "For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "Returns the anonymous function that was created and assigned as the listener. This is needed to remove the listener later using .removeEventListener.",
+                "type": "Function"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 217,
+            "description": "Removes the specified event listener.\n\n<b>Important Note:</b> that you must pass the exact function reference used when the event was added. If a proxy\nfunction, or function closure is used as the callback, the proxy/closure reference must be used - a new proxy or\nclosure will not work.\n\n<h4>Example</h4>\n\n     displayObject.removeEventListener(\"click\", handleClick);",
+            "itemtype": "method",
+            "name": "removeEventListener",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener function or object.",
+                    "type": "Function | Object"
+                },
+                {
+                    "name": "useCapture",
+                    "description": "For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 247,
+            "description": "A shortcut to the removeEventListener method, with the same parameters and return value. This is a companion to the\n.on method.",
+            "itemtype": "method",
+            "name": "off",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener function or object.",
+                    "type": "Function | Object"
+                },
+                {
+                    "name": "useCapture",
+                    "description": "For events that bubble, indicates whether to listen for the event in the capture or bubbling/target phase.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 258,
+            "description": "Removes all listeners for the specified type, or all listeners of all types.\n\n<h4>Example</h4>\n\n     // Remove all listeners\n     displayObject.removeAllEventListeners();\n\n     // Remove all click listeners\n     displayObject.removeAllEventListeners(\"click\");",
+            "itemtype": "method",
+            "name": "removeAllEventListeners",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event. If omitted, all listeners for all types will be removed.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 280,
+            "description": "Dispatches the specified event to all listeners.\n\n<h4>Example</h4>\n\n     // Use a string event\n     this.dispatchEvent(\"complete\");\n\n     // Use an Event instance\n     var event = new createjs.Event(\"progress\");\n     this.dispatchEvent(event);",
+            "itemtype": "method",
+            "name": "dispatchEvent",
+            "params": [
+                {
+                    "name": "eventObj",
+                    "description": "An object with a \"type\" property, or a string type.\nWhile a generic object will work, it is recommended to use a CreateJS Event instance. If a string is used,\ndispatchEvent will construct an Event instance with the specified type.",
+                    "type": "Object | String | Event"
+                },
+                {
+                    "name": "target",
+                    "description": "The object to use as the target property of the event object. This will default to the\ndispatching object. <b>This parameter is deprecated and will be removed.</b>",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns the value of eventObj.defaultPrevented.",
+                "type": "Boolean"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 329,
+            "description": "Indicates whether there is at least one listener for the specified event type.",
+            "itemtype": "method",
+            "name": "hasEventListener",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns true if there is at least one listener for the specified event.",
+                "type": "Boolean"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 340,
+            "description": "Indicates whether there is at least one listener for the specified event type on this object or any of its\nancestors (parent, parent's parent, etc). A return value of true indicates that if a bubbling event of the\nspecified type is dispatched from this object, it will trigger at least one listener.\n\nThis is similar to {{#crossLink \"EventDispatcher/hasEventListener\"}}{{/crossLink}}, but it searches the entire\nevent flow for a listener, not just this object.",
+            "itemtype": "method",
+            "name": "willTrigger",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The string type of the event.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns `true` if there is at least one listener for the specified event.",
+                "type": "Boolean"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 360,
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "a string representation of the instance.",
+                "type": "String"
+            },
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/events/EventDispatcher.js",
+            "line": 369,
+            "itemtype": "method",
+            "name": "_dispatchEvent",
+            "params": [
+                {
+                    "name": "eventObj",
+                    "description": "",
+                    "type": "Object | String | Event"
+                },
+                {
+                    "name": "eventPhase",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "EventDispatcher",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/utils/IndexOf.js",
+            "line": 78,
+            "description": "Finds the first occurrence of a specified value searchElement in the passed in array, and returns the index of\nthat value.  Returns -1 if value is not found.\n\n     var i = createjs.indexOf(myArray, myElementToFind);",
+            "itemtype": "method",
+            "name": "indexOf",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "Array to search for searchElement",
+                    "type": "Array"
+                },
+                {
+                    "name": "searchElement",
+                    "description": "Element to find in array."
+                }
+            ],
+            "return": {
+                "description": "The first index of searchElement in array.",
+                "type": "Number"
+            },
+            "class": "Utility Methods",
+            "module": "CreateJS"
+        },
+        {
+            "file": "createjs/utils/Proxy.js",
+            "line": 50,
+            "description": "A function proxy for methods. By default, JavaScript methods do not maintain scope, so passing a method as a\ncallback will result in the method getting called in the scope of the caller. Using a proxy ensures that the\nmethod gets called in the correct scope.\n\nAdditional arguments can be passed that will be applied to the function when it is called.\n\n<h4>Example</h4>\n     myObject.addEventListener(\"event\", createjs.proxy(myHandler, this, arg1, arg2));\n\n     function myHandler(arg1, arg2) {\n          // This gets called when myObject.myCallback is executed.\n     }",
+            "itemtype": "method",
+            "name": "proxy",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "The function to call",
+                    "type": "Function"
+                },
+                {
+                    "name": "scope",
+                    "description": "The scope to call the method name on",
+                    "type": "Object"
+                },
+                {
+                    "name": "arg",
+                    "description": "* Arguments that are appended to the callback for additional params.",
+                    "type": "Mixed",
+                    "optional": true
+                }
+            ],
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "class": "Utility Methods",
+            "module": "CreateJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 53,
+            "description": "The RegExp pattern to use to parse file URIs. This supports simple file names, as well as full domain URIs with\nquery strings. The resulting match is: protocol:$1 domain:$2 relativePath:$3 path:$4 file:$5 extension:$6 query:$7.",
+            "itemtype": "property",
+            "name": "FILE_PATTERN",
+            "type": "{RegExp}",
+            "static": 1,
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 63,
+            "description": "The RegExp pattern to use to parse path URIs. This supports protocols, relative files, and paths. The resulting\nmatch is: protocol:$1 relativePath:$2 path$3.",
+            "itemtype": "property",
+            "name": "PATH_PATTERN",
+            "type": "{RegExp}",
+            "static": 1,
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 73,
+            "description": "If the loader has completed loading. This provides a quick check, but also ensures that the different approaches\nused for loading do not pile up resulting in more than one <code>complete</code> event.",
+            "itemtype": "property",
+            "name": "loaded",
+            "type": "{Boolean}",
+            "default": "false",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 82,
+            "description": "Determine if the loader was canceled. Canceled loads will not fire complete events. Note that\n{{#crossLink \"LoadQueue\"}}{{/crossLink}} queues should be closed using {{#crossLink \"AbstractLoader/close\"}}{{/crossLink}}\ninstead of setting this property.",
+            "itemtype": "property",
+            "name": "canceled",
+            "type": "{Boolean}",
+            "default": "false",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 92,
+            "description": "The current load progress (percentage) for this item. This will be a number between 0 and 1.\n\n<h4>Example</h4>\n\n    var queue = new createjs.LoadQueue();\n    queue.loadFile(\"largeImage.png\");\n    queue.on(\"progress\", function() {\n        console.log(\"Progress:\", queue.progress, event.progress);\n    });",
+            "itemtype": "property",
+            "name": "progress",
+            "type": "{Number}",
+            "default": "0",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 109,
+            "description": "The item this loader represents. Note that this is null in a {{#crossLink \"LoadQueue\"}}{{/crossLink}}, but will\nbe available on loaders such as {{#crossLink \"XHRLoader\"}}{{/crossLink}} and {{#crossLink \"TagLoader\"}}{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "_item",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 119,
+            "description": "The event that is fired when the overall progress changes.",
+            "itemtype": "event",
+            "name": "progress",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "loaded",
+                    "description": "The amount that has been loaded so far. Note that this is may just be a percentage of 1,\nsince file sizes can not be determined before a load is kicked off, if at all.",
+                    "type": "Number"
+                },
+                {
+                    "name": "total",
+                    "description": "The total number of bytes. Note that this may just be 1.",
+                    "type": "Number"
+                },
+                {
+                    "name": "progress",
+                    "description": "The ratio that has been loaded between 0 and 1.",
+                    "type": "Number"
+                }
+            ],
+            "since": "0.3.0",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 131,
+            "description": "The event that is fired when a load starts.",
+            "itemtype": "event",
+            "name": "loadstart",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                }
+            ],
+            "since": "0.3.1",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 139,
+            "description": "The event that is fired when the entire queue has been loaded.",
+            "itemtype": "event",
+            "name": "complete",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                }
+            ],
+            "since": "0.3.0",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 147,
+            "description": "The event that is fired when the loader encounters an error. If the error was encountered by a file, the event will\ncontain the item that caused the error. There may be additional properties such as the error reason on event\nobjects.",
+            "itemtype": "event",
+            "name": "error",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The item that was being loaded that caused the error. The item was specified in\nthe {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} or {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}\ncall. If only a string path or tag was specified, the object will contain that value as a `src` property.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "error",
+                    "description": "The error object or text.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "since": "0.3.0",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 162,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"AbstractLoader/progress:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onProgress",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"progress\" event.",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 169,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"AbstractLoader/loadstart:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onLoadStart",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"loadstart\" event.",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 176,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"AbstractLoader/complete:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onComplete",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"complete\" event.",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 183,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"AbstractLoader/error:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onError",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"error\" event.",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 191,
+            "description": "Get a reference to the manifest item that is loaded by this loader. In most cases this will be the value that was\npassed into {{#crossLink \"LoadQueue\"}}{{/crossLink}} using {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} or\n{{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}. However if only a String path was passed in, then it will\nbe an Object created by the LoadQueue.",
+            "return": {
+                "description": "The manifest item that this loader is responsible for loading.",
+                "type": "Object"
+            },
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 202,
+            "description": "Initialize the loader. This is called by the constructor.",
+            "itemtype": "method",
+            "name": "init",
+            "access": "private",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 209,
+            "description": "Begin loading the queued items. This method can be called when a {{#crossLink \"LoadQueue\"}}{{/crossLink}} is set\nup but not started immediately.",
+            "example": [
+                "\n     var queue = new createjs.LoadQueue();\n     queue.addEventListener(\"complete\", handleComplete);\n     queue.loadManifest(fileArray, false); // Note the 2nd argument that tells the queue not to start loading yet\n     queue.load();"
+            ],
+            "itemtype": "method",
+            "name": "load",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 221,
+            "description": "Close the active queue. Closing a queue completely empties the queue, and prevents any remaining items from\nstarting to download. Note that currently any active loads will remain open, and events may be processed.\n\nTo stop and restart a queue, use the {{#crossLink \"LoadQueue/setPaused\"}}{{/crossLink}} method instead.",
+            "itemtype": "method",
+            "name": "close",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 232,
+            "description": "Dispatch a loadstart event. Please see the {{#crossLink \"AbstractLoader/loadstart:event\"}}{{/crossLink}} event\nfor details on the event payload.",
+            "itemtype": "method",
+            "name": "_sendLoadStart",
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 243,
+            "description": "Dispatch a progress event. Please see the {{#crossLink \"AbstractLoader/progress:event\"}}{{/crossLink}} event for\ndetails on the event payload.",
+            "itemtype": "method",
+            "name": "_sendProgress",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The progress of the loaded item, or an object containing <code>loaded</code>\nand <code>total</code> properties.",
+                    "type": "Number | Object"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 268,
+            "description": "Dispatch a complete event. Please see the {{#crossLink \"AbstractLoader/complete:event\"}}{{/crossLink}} event\nfor details on the event payload.",
+            "itemtype": "method",
+            "name": "_sendComplete",
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 279,
+            "description": "Dispatch an error event. Please see the {{#crossLink \"AbstractLoader/error:event\"}}{{/crossLink}} event for\ndetails on the event payload.",
+            "itemtype": "method",
+            "name": "_sendError",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The event object containing specific error properties.",
+                    "type": "Object"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 294,
+            "description": "Determine if the load has been canceled. This is important to ensure that method calls or asynchronous events\ndo not cause issues after the queue has been cleaned up.",
+            "itemtype": "method",
+            "name": "_isCanceled",
+            "return": {
+                "description": "If the loader has been canceled.",
+                "type": "Boolean"
+            },
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 308,
+            "description": "Parse a file URI using the {{#crossLink \"AbstractLoader/FILE_PATTERN:property\"}}{{/crossLink}} RegExp pattern.",
+            "itemtype": "method",
+            "name": "_parseURI",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "The file path to parse.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The matched file contents. Please see the FILE_PATTERN property for details on the return value.\nThis will return null if it does not match.",
+                "type": "Array"
+            },
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 321,
+            "description": "Parse a file URI using the {{#crossLink \"AbstractLoader/PATH_PATTERN\"}}{{/crossLink}} RegExp pattern.",
+            "itemtype": "method",
+            "name": "_parsePath",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "The file path to parse.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The matched path contents. Please see the PATH_PATTERN property for details on the return value.\nThis will return null if it does not match.",
+                "type": "Array"
+            },
+            "access": "protected",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 334,
+            "description": "Formats an object into a query string for either a POST or GET request.",
+            "itemtype": "method",
+            "name": "_formatQueryString",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to convert to a query string.",
+                    "type": "Object"
+                },
+                {
+                    "name": "query",
+                    "description": "Existing name/value pairs to append on to this query.",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 355,
+            "description": "A utility method that builds a file path using a source and a data object, and formats it into a new path. All\nof the loaders in PreloadJS use this method to compile paths when loading.",
+            "itemtype": "method",
+            "name": "buildPath",
+            "params": [
+                {
+                    "name": "src",
+                    "description": "The source path to add values to.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "Object used to append values to this request as a query string. Existing parameters on the\npath will be preserved.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "A formatted string that contains the path and the supplied parameters.",
+                "type": "String"
+            },
+            "since": "0.3.1",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 385,
+            "itemtype": "method",
+            "name": "_isCrossDomain",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "A load item with a `src` property",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "If the load item is loading from a different domain than the current location.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 405,
+            "itemtype": "method",
+            "name": "_isLocal",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "A load item with a `src` property",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "If the load item is loading from the \"file:\" protocol. Assume that the host must be local as\nwell.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/AbstractLoader.js",
+            "line": 418,
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "a string representation of the instance.",
+                "type": "String"
+            },
+            "class": "AbstractLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 260,
+            "description": "Time in milliseconds to assume a load has failed. An {{#crossLink \"AbstractLoader/error:event\"}}{{/crossLink}}\nevent is dispatched if the timeout is reached before any data is received.",
+            "itemtype": "property",
+            "name": "loadTimeout",
+            "type": "{Number}",
+            "default": "8000",
+            "static": 1,
+            "since": "0.4.1",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 271,
+            "description": "Time in milliseconds to assume a load has failed.",
+            "type": "{Number}",
+            "deprecated": true,
+            "deprecationMessage": "in favor of the {{#crossLink \"LoadQueue/loadTimeout:property\"}}{{/crossLink}} property.",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 279,
+            "description": "The preload type for generic binary types. Note that images are loaded as binary files when using XHR.",
+            "itemtype": "property",
+            "name": "BINARY",
+            "type": "{String}",
+            "default": "binary",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 288,
+            "description": "The preload type for css files. CSS files are loaded using a &lt;link&gt; when loaded with XHR, or a\n&lt;style&gt; tag when loaded with tags.",
+            "itemtype": "property",
+            "name": "CSS",
+            "type": "{String}",
+            "default": "css",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 298,
+            "description": "The preload type for image files, usually png, gif, or jpg/jpeg. Images are loaded into an &lt;image&gt; tag.",
+            "itemtype": "property",
+            "name": "IMAGE",
+            "type": "{String}",
+            "default": "image",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 307,
+            "description": "The preload type for javascript files, usually with the \"js\" file extension. JavaScript files are loaded into a\n&lt;script&gt; tag.\n\nSince version 0.4.1+, due to how tag-loaded scripts work, all JavaScript files are automatically injected into\nthe body of the document to maintain parity between XHR and tag-loaded scripts. In version 0.4.0 and earlier,\nonly tag-loaded scripts are injected.",
+            "itemtype": "property",
+            "name": "JAVASCRIPT",
+            "type": "{String}",
+            "default": "javascript",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 321,
+            "description": "The preload type for json files, usually with the \"json\" file extension. JSON data is loaded and parsed into a\nJavaScript object. Note that if a `callback` is present on the load item, the file will be loaded with JSONP,\nno matter what the {{#crossLink \"LoadQueue/useXHR:property\"}}{{/crossLink}} property is set to, and the JSON\nmust contain a matching wrapper function.",
+            "itemtype": "property",
+            "name": "JSON",
+            "type": "{String}",
+            "default": "json",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 333,
+            "description": "The preload type for jsonp files, usually with the \"json\" file extension. JSON data is loaded and parsed into a\nJavaScript object. You are required to pass a callback parameter that matches the function wrapper in the JSON.\nNote that JSONP will always be used if there is a callback present, no matter what the {{#crossLink \"LoadQueue/useXHR:property\"}}{{/crossLink}}\nproperty is set to.",
+            "itemtype": "property",
+            "name": "JSONP",
+            "type": "{String}",
+            "default": "jsonp",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 345,
+            "description": "The preload type for json-based manifest files, usually with the \"json\" file extension. The JSON data is loaded\nand parsed into a JavaScript object. PreloadJS will then look for a \"manifest\" property in the JSON, which is an\nArray of files to load, following the same format as the {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}\nmethod. If a \"callback\" is specified on the manifest object, then it will be loaded using JSONP instead,\nregardless of what the {{#crossLink \"LoadQueue/useXHR:property\"}}{{/crossLink}} property is set to.",
+            "itemtype": "property",
+            "name": "MANIFEST",
+            "type": "{String}",
+            "default": "manifest",
+            "static": 1,
+            "since": "0.4.1",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 359,
+            "description": "The preload type for sound files, usually mp3, ogg, or wav. When loading via tags, audio is loaded into an\n&lt;audio&gt; tag.",
+            "itemtype": "property",
+            "name": "SOUND",
+            "type": "{String}",
+            "default": "sound",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 369,
+            "description": "The preload type for SVG files.",
+            "itemtype": "property",
+            "name": "SVG",
+            "type": "{String}",
+            "default": "svg",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 378,
+            "description": "The preload type for text files, which is also the default file type if the type can not be determined. Text is\nloaded as raw text.",
+            "itemtype": "property",
+            "name": "TEXT",
+            "type": "{String}",
+            "default": "text",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 388,
+            "description": "The preload type for xml files. XML is loaded into an XML document.",
+            "itemtype": "property",
+            "name": "XML",
+            "type": "{String}",
+            "default": "xml",
+            "static": 1,
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 397,
+            "description": "Defines a POST request, use for a method value when loading data.",
+            "type": "{string}",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 404,
+            "description": "Defines a GET request, use for a method value when loading data.",
+            "type": "{string}",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 413,
+            "description": "A path that will be prepended on to the item's `src`. The `_basePath` property will only be used if an item's\nsource is relative, and does not include a protocol such as `http://`, or a relative path such as `../`.",
+            "itemtype": "property",
+            "name": "_basePath",
+            "type": "{String}",
+            "access": "private",
+            "tagname": "",
+            "since": "0.3.1",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 423,
+            "description": "An optional flag to set on images that are loaded using PreloadJS, which enables CORS support. Images loaded\ncross-domain by servers that support CORS require the crossOrigin flag to be loaded and interacted with by\na canvas. When loading locally, or with a server with no CORS support, this flag can cause other security issues,\nso it is recommended to only set it if you are sure the server supports it. Currently, supported values are \"\"\nand \"Anonymous\".",
+            "itemtype": "property",
+            "name": "_crossOrigin",
+            "type": "{String}",
+            "defaultvalue": "\"\"",
+            "access": "private",
+            "tagname": "",
+            "since": "0.4.1",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 437,
+            "description": "Use XMLHttpRequest (XHR) when possible. Note that LoadQueue will default to tag loading or XHR loading depending\non the requirements for a media type. For example, HTML audio can not be loaded with XHR, and WebAudio can not be\nloaded with tags, so it will default the the correct type instead of using the user-defined type.\n\n<b>Note: This property is read-only.</b> To change it, please use the {{#crossLink \"LoadQueue/setUseXHR\"}}{{/crossLink}}\nmethod, or specify the `useXHR` argument in the LoadQueue constructor.",
+            "itemtype": "property",
+            "name": "useXHR",
+            "type": "{Boolean}",
+            "readonly": "",
+            "default": "true",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 452,
+            "description": "Determines if the LoadQueue will stop processing the current queue when an error is encountered.",
+            "itemtype": "property",
+            "name": "stopOnError",
+            "type": "{Boolean}",
+            "default": "false",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 460,
+            "description": "Ensure loaded scripts \"complete\" in the order they are specified. Loaded scripts are added to the document head\nonce they are loaded. Note that scripts loaded via tags will load one-at-a-time when this property is `true`.\nload one at a time",
+            "itemtype": "property",
+            "name": "maintainScriptOrder",
+            "type": "{Boolean}",
+            "default": "true",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 470,
+            "description": "The next preload queue to process when this one is complete. If an error is thrown in the current queue, and\n{{#crossLink \"LoadQueue/stopOnError:property\"}}{{/crossLink}} is `true`, the next queue will not be processed.",
+            "itemtype": "property",
+            "name": "next",
+            "type": "{LoadQueue}",
+            "default": "null",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 480,
+            "description": "This event is fired when an individual file has loaded, and been processed.",
+            "itemtype": "event",
+            "name": "fileload",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "The object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The file item which was specified in the {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}\nor {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}} call. If only a string path or tag was specified, the\nobject will contain that value as a `src` property.",
+                    "type": "Object"
+                },
+                {
+                    "name": "result",
+                    "description": "The HTML tag or parsed result of the loaded item.",
+                    "type": "Object"
+                },
+                {
+                    "name": "rawResult",
+                    "description": "The unprocessed result, usually the raw text or binary data before it is converted\nto a usable object.",
+                    "type": "Object"
+                }
+            ],
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 494,
+            "description": "This event is fired when an an individual file progress changes.",
+            "itemtype": "event",
+            "name": "fileprogress",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The file item which was specified in the {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}\nor {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}} call. If only a string path or tag was specified, the\nobject will contain that value as a `src` property.",
+                    "type": "Object"
+                },
+                {
+                    "name": "loaded",
+                    "description": "The number of bytes that have been loaded. Note that this may just be a percentage of 1.",
+                    "type": "Number"
+                },
+                {
+                    "name": "total",
+                    "description": "The total number of bytes. If it is unknown, the value is 1.",
+                    "type": "Number"
+                },
+                {
+                    "name": "progress",
+                    "description": "The amount that has been loaded between 0 and 1.",
+                    "type": "Number"
+                }
+            ],
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 508,
+            "description": "This event is fired when an individual file starts to load.",
+            "itemtype": "event",
+            "name": "filestart",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "object that dispatched the event.",
+                    "type": "Object"
+                },
+                {
+                    "name": "type",
+                    "description": "The event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The file item which was specified in the {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}\nor {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}} call. If only a string path or tag was specified, the\nobject will contain that value as a property.",
+                    "type": "Object"
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 519,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onFileLoad",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"fileload\" event.",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 526,
+            "description": "REMOVED. Use {{#crossLink \"EventDispatcher/addEventListener\"}}{{/crossLink}} and the {{#crossLink \"LoadQueue/fileprogress:event\"}}{{/crossLink}}\nevent.",
+            "itemtype": "property",
+            "name": "onFileProgress",
+            "type": "{Function}",
+            "deprecated": true,
+            "deprecationMessage": "Use addEventListener and the \"fileprogress\" event.",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 536,
+            "description": "An object hash of callbacks that are fired for each file type before the file is loaded, giving plugins the\nability to override properties of the load. Please see the {{#crossLink \"LoadQueue/installPlugin\"}}{{/crossLink}}\nmethod for more information.",
+            "itemtype": "property",
+            "name": "_typeCallbacks",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 546,
+            "description": "An object hash of callbacks that are fired for each file extension before the file is loaded, giving plugins the\nability to override properties of the load. Please see the {{#crossLink \"LoadQueue/installPlugin\"}}{{/crossLink}}\nmethod for more information.",
+            "itemtype": "property",
+            "name": "_extensionCallbacks",
+            "type": "{null}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 556,
+            "description": "Determines if the loadStart event was dispatched already. This event is only fired one time, when the first\nfile is requested.",
+            "itemtype": "property",
+            "name": "_loadStartWasDispatched",
+            "type": "{Boolean}",
+            "default": "false",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 566,
+            "description": "The number of maximum open connections that a loadQueue tries to maintain. Please see\n{{#crossLink \"LoadQueue/setMaxConnections\"}}{{/crossLink}} for more information.",
+            "itemtype": "property",
+            "name": "_maxConnections",
+            "type": "{Number}",
+            "default": "1",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 576,
+            "description": "Determines if there is currently a script loading. This helps ensure that only a single script loads at once when\nusing a script tag to do preloading.",
+            "itemtype": "property",
+            "name": "_currentlyLoadingScript",
+            "type": "{Boolean}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 585,
+            "description": "An array containing the currently downloading files.",
+            "itemtype": "property",
+            "name": "_currentLoads",
+            "type": "{Array}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 593,
+            "description": "An array containing the queued items that have not yet started downloading.",
+            "itemtype": "property",
+            "name": "_loadQueue",
+            "type": "{Array}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 601,
+            "description": "An array containing downloads that have not completed, so that the LoadQueue can be properly reset.",
+            "itemtype": "property",
+            "name": "_loadQueueBackup",
+            "type": "{Array}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 609,
+            "description": "An object hash of items that have finished downloading, indexed by item IDs.",
+            "itemtype": "property",
+            "name": "_loadItemsById",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 617,
+            "description": "An object hash of items that have finished downloading, indexed by item source.",
+            "itemtype": "property",
+            "name": "_loadItemsBySrc",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 625,
+            "description": "An object hash of loaded items, indexed by the ID of the load item.",
+            "itemtype": "property",
+            "name": "_loadedResults",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 633,
+            "description": "An object hash of un-parsed loaded items, indexed by the ID of the load item.",
+            "itemtype": "property",
+            "name": "_loadedRawResults",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 641,
+            "description": "The number of items that have been requested. This helps manage an overall progress without knowing how large\nthe files are before they are downloaded.",
+            "itemtype": "property",
+            "name": "_numItems",
+            "type": "{Number}",
+            "default": "0",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 651,
+            "description": "The number of items that have completed loaded. This helps manage an overall progress without knowing how large\nthe files are before they are downloaded.",
+            "itemtype": "property",
+            "name": "_numItemsLoaded",
+            "type": "{Number}",
+            "default": "0",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 661,
+            "description": "A list of scripts in the order they were requested. This helps ensure that scripts are \"completed\" in the right\norder.",
+            "itemtype": "property",
+            "name": "_scriptOrder",
+            "type": "{Array}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 670,
+            "description": "A list of scripts that have been loaded. Items are added to this list as <code>null</code> when they are\nrequested, contain the loaded item if it has completed, but not been dispatched to the user, and <code>true</true>\nonce they are complete and have been dispatched.",
+            "itemtype": "property",
+            "name": "_loadedScripts",
+            "type": "{Array}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 707,
+            "description": "Change the usXHR value. Note that if this is set to true, it may fail depending on the browser's capabilities.\nAdditionally, some files require XHR in order to load, such as JSON (without JSONP), Text, and XML, so XHR will\nbe used regardless of what is passed to this method.",
+            "itemtype": "method",
+            "name": "setUseXHR",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The new useXHR value to set.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "The new useXHR value. If XHR is not supported by the browser, this will return false, even if\nthe provided value argument was true.",
+                "type": "Boolean"
+            },
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 724,
+            "description": "Stops all queued and loading items, and clears the queue. This also removes all internal references to loaded\ncontent, and allows the queue to be used again.",
+            "itemtype": "method",
+            "name": "removeAll",
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 734,
+            "description": "Stops an item from being loaded, and removes it from the queue. If nothing is passed, all items are removed.\nThis also removes internal references to loaded item(s).\n\n<h4>Example</h4>\n\n     queue.loadManifest([\n         {src:\"test.png\", id:\"png\"},\n         {src:\"test.jpg\", id:\"jpg\"},\n         {src:\"test.mp3\", id:\"mp3\"}\n     ]);\n     queue.remove(\"png\"); // Single item by ID\n     queue.remove(\"png\", \"test.jpg\"); // Items as arguments. Mixed id and src.\n     queue.remove([\"test.png\", \"jpg\"]); // Items in an Array. Mixed id and src.",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "idsOrUrls",
+                    "description": "The id or ids to remove from this queue. You can pass an item, an array of\nitems, or multiple items as arguments.",
+                    "type": "String | Array",
+                    "multiple": true
+                }
+            ],
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 822,
+            "description": "Stops all open loads, destroys any loaded items, and resets the queue, so all items can\nbe reloaded again by calling {{#crossLink \"AbstractLoader/load\"}}{{/crossLink}}. Items are not removed from the\nqueue. To remove items use the {{#crossLink \"LoadQueue/remove\"}}{{/crossLink}} or\n{{#crossLink \"LoadQueue/removeAll\"}}{{/crossLink}} method.",
+            "itemtype": "method",
+            "name": "reset",
+            "since": "0.3.0",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 845,
+            "description": "Determine if a specific type should be loaded as a binary file. Currently, only images and items marked\nspecifically as \"binary\" are loaded as binary. Note that audio is <b>not</b> a binary type, as we can not play\nback using an audio tag if it is loaded as binary. Plugins can change the item type to binary to ensure they get\na binary result to work with. Binary files are loaded using XHR2.",
+            "itemtype": "method",
+            "name": "isBinary",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The item type.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "If the specified type is binary.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 866,
+            "description": "Determine if a specific type is a text based asset, and should be loaded as UTF-8.",
+            "itemtype": "method",
+            "name": "isText",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The item type.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "If the specified type is text.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 889,
+            "description": "Register a plugin. Plugins can map to load types (sound, image, etc), or specific extensions (png, mp3, etc).\nCurrently, only one plugin can exist per type/extension.\n\nWhen a plugin is installed, a <code>getPreloadHandlers()</code> method will be called on it. For more information\non this method, check out the {{#crossLink \"SamplePlugin/getPreloadHandlers\"}}{{/crossLink}} method in the\n{{#crossLink \"SamplePlugin\"}}{{/crossLink}} class.\n\nBefore a file is loaded, a matching plugin has an opportunity to modify the load. If a `callback` is returned\nfrom the {{#crossLink \"SamplePlugin/getPreloadHandlers\"}}{{/crossLink}} method, it will be invoked first, and its\nresult may cancel or modify the item. The callback method can also return a `completeHandler` to be fired when\nthe file is loaded, or a `tag` object, which will manage the actual download. For more information on these\nmethods, check out the {{#crossLink \"SamplePlugin/preloadHandler\"}}{{/crossLink}} and {{#crossLink \"SamplePlugin/fileLoadHandler\"}}{{/crossLink}}\nmethods on the {{#crossLink \"SamplePlugin\"}}{{/crossLink}}.",
+            "itemtype": "method",
+            "name": "installPlugin",
+            "params": [
+                {
+                    "name": "plugin",
+                    "description": "The plugin class to install.",
+                    "type": "Function"
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 924,
+            "description": "Set the maximum number of concurrent connections. Note that browsers and servers may have a built-in maximum\nnumber of open connections, so any additional connections may remain in a pending state until the browser\nopens the connection. When loading scripts using tags, and when {{#crossLink \"LoadQueue/maintainScriptOrder:property\"}}{{/crossLink}}\nis `true`, only one script is loaded at a time due to browser limitations.\n\n<h4>Example</h4>\n\n     var queue = new createjs.LoadQueue();\n     queue.setMaxConnections(10); // Allow 10 concurrent loads",
+            "itemtype": "method",
+            "name": "setMaxConnections",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The number of concurrent loads to allow. By default, only a single connection per LoadQueue\nis open at any time.",
+                    "type": "Number"
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 946,
+            "description": "Load a single file. To add multiple files at once, use the {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}\nmethod.\n\nFiles are always appended to the current queue, so this method can be used multiple times to add files.\nTo clear the queue first, use the {{#crossLink \"AbstractLoader/close\"}}{{/crossLink}} method.",
+            "itemtype": "method",
+            "name": "loadFile",
+            "params": [
+                {
+                    "name": "file",
+                    "description": "The file object or path to load. A file can be either\n<ul>\n    <li>A string path to a resource. Note that this kind of load item will be converted to an object (see below)\n    in the background.</li>\n    <li>OR an object that contains:<ul>\n        <li>src: The source of the file that is being loaded. This property is <b>required</b>. The source can\n        either be a string (recommended), or an HTML tag.</li>\n        <li>type: The type of file that will be loaded (image, sound, json, etc). PreloadJS does auto-detection\n        of types using the extension. Supported types are defined on LoadQueue, such as <code>LoadQueue.IMAGE</code>.\n        It is recommended that a type is specified when a non-standard file URI (such as a php script) us used.</li>\n        <li>id: A string identifier which can be used to reference the loaded object.</li>\n        <li>callback: Optional, used for JSONP requests, to define what method to call when the JSONP is loaded.</li>\n        <li>data: An arbitrary data object, which is included with the loaded object</li>\n        <li>method: used to define if this request uses GET or POST when sending data to the server. The default\n        value is \"GET\"</li>\n        <li>values: Optional object of name/value pairs to send to the server.</li>\n    </ul>\n</ul>",
+                    "type": "Object | String"
+                },
+                {
+                    "name": "loadNow",
+                    "description": "Kick off an immediate load (true) or wait for a load call (false). The default\nvalue is true. If the queue is paused using {{#crossLink \"LoadQueue/setPaused\"}}{{/crossLink}}, and the value is\n`true`, the queue will resume automatically.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                },
+                {
+                    "name": "basePath",
+                    "description": "A base path that will be prepended to each file. The basePath argument overrides the\npath specified in the constructor. Note that if you load a manifest using a file of type {{#crossLink \"LoadQueue/MANIFEST:property\"}}{{/crossLink}},\nits files will <strong>NOT</strong> use the basePath parameter. <strong>The basePath parameter is deprecated.</strong>\nThis parameter will be removed in a future version. Please either use the `basePath` parameter in the LoadQueue\nconstructor, or a `path` property in a manifest definition.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 996,
+            "description": "Load an array of files. To load a single file, use the {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} method.\nThe files in the manifest are requested in the same order, but may complete in a different order if the max\nconnections are set above 1 using {{#crossLink \"LoadQueue/setMaxConnections\"}}{{/crossLink}}. Scripts will load\nin the right order as long as {{#crossLink \"LoadQueue/maintainScriptOrder\"}}{{/crossLink}} is true (which is\ndefault).\n\nFiles are always appended to the current queue, so this method can be used multiple times to add files.\nTo clear the queue first, use the {{#crossLink \"AbstractLoader/close\"}}{{/crossLink}} method.",
+            "itemtype": "method",
+            "name": "loadManifest",
+            "params": [
+                {
+                    "name": "manifest",
+                    "description": "An list of files to load. The loadManifest call supports four types of\nmanifests:\n<ol>\n    <li>A string path, which points to a manifest file, which is a JSON file that contains a \"manifest\" property,\n    which defines the list of files to load, and can optionally contain a \"path\" property, which will be\n    prepended to each file in the list.</li>\n    <li>An object which defines a \"src\", which is a JSON or JSONP file. A \"callback\" can be defined for JSONP\n    file. The JSON/JSONP file should contain a \"manifest\" property, which defines the list of files to load,\n    and can optionally contain a \"path\" property, which will be prepended to each file in the list.</li>\n    <li>An object which contains a \"manifest\" property, which defines the list of files to load, and can\n    optionally contain a \"path\" property, which will be prepended to each file in the list.</li>\n    <li>An Array of files to load.</li>\n</ol>\n\nEach \"file\" in a manifest can be either:\n<ul>\n    <li>A string path to a resource (string). Note that this kind of load item will be converted to an object\n    (see below) in the background.</li>\n     <li>OR an object that contains:<ul>\n        <li>src: The source of the file that is being loaded. This property is <b>required</b>. The source can\n        either be a string (recommended), or an HTML tag.</li>\n        <li>type: The type of file that will be loaded (image, sound, json, etc). PreloadJS does auto-detection\n        of types using the extension. Supported types are defined on LoadQueue, such as <code>LoadQueue.IMAGE</code>.\n        It is recommended that a type is specified when a non-standard file URI (such as a php script) us used.</li>\n        <li>id: A string identifier which can be used to reference the loaded object.</li>\n        <li>callback: Optional, used for JSONP requests, to define what method to call when the JSONP is loaded.</li>\n        <li>data: An arbitrary data object, which is included with the loaded object</li>\n        <li>method: used to define if this request uses GET or POST when sending data to the server. The default\n        value is \"GET\"</li>\n        <li>values: Optional object of name/value pairs to send to the server.</li>\n    </ul>\n</ul>",
+                    "type": "Array|String|Object"
+                },
+                {
+                    "name": "loadNow",
+                    "description": "Kick off an immediate load (true) or wait for a load call (false). The default\nvalue is true. If the queue is paused using {{#crossLink \"LoadQueue/setPaused\"}}{{/crossLink}} and this value is\n`true`, the queue will resume automatically.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                },
+                {
+                    "name": "basePath",
+                    "description": "A base path that will be prepended to each file. The basePath argument overrides the\npath specified in the constructor. Note that if you load a manifest using a file of type {{#crossLink \"LoadQueue/MANIFEST:property\"}}{{/crossLink}},\nits files will <strong>NOT</strong> use the basePath parameter. <strong>The basePath parameter is deprecated.</strong>\nThis parameter will be removed in a future version. Please either use the `basePath` parameter in the LoadQueue\nconstructor, or a `path` property in a manifest definition.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1112,
+            "description": "Look up a load item using either the \"id\" or \"src\" that was specified when loading it. Note that if no \"id\" was\nsupplied with the load item, the ID will be the \"src\", including a `path` property defined by a manifest. The\n`basePath` will not be part of the ID.",
+            "itemtype": "method",
+            "name": "getItem",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The <code>id</code> or <code>src</code> of the load item.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The load item that was initially requested using {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}\nor {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}. This object is also returned via the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}}\nevent as the `item` parameter.",
+                "type": "Object"
+            },
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1126,
+            "description": "Look up a loaded result using either the \"id\" or \"src\" that was specified when loading it. Note that if no \"id\"\nwas supplied with the load item, the ID will be the \"src\", including a `path` property defined by a manifest. The\n`basePath` will not be part of the ID.",
+            "itemtype": "method",
+            "name": "getResult",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The <code>id</code> or <code>src</code> of the load item.",
+                    "type": "String"
+                },
+                {
+                    "name": "rawResult",
+                    "description": "Return a raw result instead of a formatted result. This applies to content\nloaded via XHR such as scripts, XML, CSS, and Images. If there is no raw result, the formatted result will be\nreturned instead.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "A result object containing the content that was loaded, such as:\n<ul>\n     <li>An image tag (&lt;image /&gt;) for images</li>\n     <li>A script tag for JavaScript (&lt;script /&gt;). Note that scripts are automatically added to the HTML\n     DOM.</li>\n     <li>A style tag for CSS (&lt;style /&gt; or &lt;link &gt;)</li>\n     <li>Raw text for TEXT</li>\n     <li>A formatted JavaScript object defined by JSON</li>\n     <li>An XML document</li>\n     <li>A binary arraybuffer loaded by XHR</li>\n     <li>An audio tag (&lt;audio &gt;) for HTML audio. Note that it is recommended to use SoundJS APIs to play\n     loaded audio. Specifically, audio loaded by Flash and WebAudio will return a loader object using this method\n     which can not be used to play audio back.</li>\n</ul>\nThis object is also returned via the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}}  event as the 'item`\nparameter. Note that if a raw result is requested, but not found, the result will be returned instead.",
+                "type": "Object"
+            },
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1162,
+            "description": "Pause or resume the current load. Active loads will not be cancelled, but the next items in the queue will not\nbe processed when active loads complete. LoadQueues are not paused by default.\n\nNote that if new items are added to the queue using {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} or {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}},\na paused queue will be resumed, unless the `loadNow` argument is `false`.",
+            "itemtype": "method",
+            "name": "setPaused",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Whether the queue should be paused or not.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1190,
+            "description": "Add an item to the queue. Items are formatted into a usable object containing all the properties necessary to\nload the content. The load queue is populated with the loader instance that handles preloading, and not the load\nitem that was passed in by the user. To look up the load item by id or src, use the {{#crossLink \"LoadQueue.getItem\"}}{{/crossLink}}\nmethod.",
+            "itemtype": "method",
+            "name": "_addItem",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The item to add to the queue.",
+                    "type": "String|Object"
+                },
+                {
+                    "name": "path",
+                    "description": "An optional path prepended to the `src`. The path will only be prepended if the src is\nrelative, and does not start with a protocol such as `http://`, or a path like `../`. If the LoadQueue was\nprovided a {{#crossLink \"_basePath\"}}{{/crossLink}}, then it will optionally be prepended after.",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "basePath",
+                    "description": "<strong>Deprecated</strong>An optional basePath passed into a {{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}\nor {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} call. This parameter will be removed in a future tagged\nversion.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1226,
+            "description": "Create a refined load item, which contains all the required properties (src, type, extension, tag). The type of\nitem is determined by browser support, requirements based on the file type, and developer settings. For example,\nXHR is only used for file types that support it in new browsers.\n\nBefore the item is returned, any plugins registered to handle the type or extension will be fired, which may\nalter the load item.",
+            "itemtype": "method",
+            "name": "_createLoadItem",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The item that needs to be preloaded.",
+                    "type": "String | Object | HTMLAudioElement | HTMLImageElement"
+                },
+                {
+                    "name": "path",
+                    "description": "A path to prepend to the item's source. Sources beginning with http:// or similar will\nnot receive a path. Since PreloadJS 0.4.1, the src will be modified to include the `path` and {{#crossLink \"LoadQueue/_basePath:property\"}}{{/crossLink}}\nwhen it is added.",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "basePath",
+                    "description": "<strong>Deprectated</strong> A base path to prepend to the items source in addition to\nthe path argument.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "The loader instance that will be used.",
+                "type": "Object"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1355,
+            "description": "Create a loader for a load item.",
+            "itemtype": "method",
+            "name": "_createLoader",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "A formatted load item that can be used to generate a loader.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "A loader that can be used to load content.",
+                "type": "AbstractLoader"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1393,
+            "description": "Load the next item in the queue. If the queue is empty (all items have been loaded), then the complete event\nis processed. The queue will \"fill up\" any empty slots, up to the max connection specified using\n{{#crossLink \"LoadQueue.setMaxConnections\"}}{{/crossLink}} method. The only exception is scripts that are loaded\nusing tags, which have to be loaded one at a time to maintain load order.",
+            "itemtype": "method",
+            "name": "_loadNext",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1441,
+            "description": "Begin loading an item. Events are not added to the loaders until the load starts.",
+            "itemtype": "method",
+            "name": "_loadItem",
+            "params": [
+                {
+                    "name": "loader",
+                    "description": "The loader instance to start. Currently, this will be an XHRLoader or TagLoader.",
+                    "type": "AbstractLoader"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1456,
+            "description": "The callback that is fired when a loader encounters an error. The queue will continue loading unless {{#crossLink \"LoadQueue/stopOnError:property\"}}{{/crossLink}}\nis set to `true`.",
+            "itemtype": "method",
+            "name": "_handleFileError",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The error event, containing relevant error information.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1481,
+            "description": "An item has finished loading. We can assume that it is totally loaded, has been parsed for immediate use, and\nis available as the \"result\" property on the load item. The raw text result for a parsed item (such as JSON, XML,\nCSS, JavaScript, etc) is available as the \"rawResult\" event, and can also be looked up using {{#crossLink \"LoadQueue/getResult\"}}{{/crossLink}}.",
+            "itemtype": "method",
+            "name": "_handleFileComplete",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The event object from the loader.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1525,
+            "itemtype": "method",
+            "name": "_processFinishedLoad",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "loader",
+                    "description": "",
+                    "type": "AbstractLoader"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1541,
+            "description": "Ensure the scripts load and dispatch in the correct order. When using XHR, scripts are stored in an array in the\norder they were added, but with a \"null\" value. When they are completed, the value is set to the load item,\nand then when they are processed and dispatched, the value is set to <code>true</code>. This method simply\niterates the array, and ensures that any loaded items that are not preceded by a <code>null</code> value are\ndispatched.",
+            "itemtype": "method",
+            "name": "_checkScriptLoadOrder",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1567,
+            "description": "A load item is completed or was canceled, and needs to be removed from the LoadQueue.",
+            "itemtype": "method",
+            "name": "_removeLoadItem",
+            "params": [
+                {
+                    "name": "loader",
+                    "description": "A loader instance to remove.",
+                    "type": "AbstractLoader"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1582,
+            "description": "An item has dispatched progress. Propagate that progress, and update the LoadQueue overall progress.",
+            "itemtype": "method",
+            "name": "_handleProgress",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The progress event from the item.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1594,
+            "description": "Overall progress has changed, so determine the new progress amount and dispatch it. This changes any time an\nitem dispatches progress or completes. Note that since we don't know the actual filesize of items before they are\nloaded, and even then we can only get the size of items loaded with XHR. In this case, we define a \"slot\" for\neach item (1 item in 10 would get 10%), and then append loaded progress on top of the already-loaded items.\n\nFor example, if 5/10 items have loaded, and item 6 is 20% loaded, the total progress would be:<ul>\n     <li>5/10 of the items in the queue (50%)</li>\n     <li>plus 20% of item 6's slot (2%)</li>\n     <li>equals 52%</li></ul>",
+            "itemtype": "method",
+            "name": "_updateProgress",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1620,
+            "description": "Clean out item results, to free them from memory. Mainly, the loaded item and results are cleared from internal\nhashes.",
+            "itemtype": "method",
+            "name": "_disposeItem",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The item that was passed in for preloading.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1635,
+            "description": "Create an HTML tag. This is in LoadQueue instead of {{#crossLink \"TagLoader\"}}{{/crossLink}} because no matter\nhow we load the data, we may need to return it in a tag.",
+            "itemtype": "method",
+            "name": "_createTag",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The item type. Items are passed in by the developer, or deteremined by the extension.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The tag that is created.\nNote that tags are not appended to the HTML body.",
+                "type": "HTMLImageElement|HTMLAudioElement|HTMLScriptElement|HTMLLinkElement|Object"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1684,
+            "description": "Determine the type of the object using common extensions. Note that the type can be passed in with the load item\nif it is an unusual extension.",
+            "params": [
+                {
+                    "name": "extension",
+                    "description": "The file extension to use to determine the load type.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The determined load type (for example, <code>LoadQueue.IMAGE</code> or null if it can not be\ndetermined by the extension.",
+                "type": "String"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1723,
+            "description": "Dispatch a fileprogress event (and onFileProgress callback). Please see the <code>LoadQueue.fileprogress</code>\nevent for details on the event payload.",
+            "itemtype": "method",
+            "name": "_sendFileProgress",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The item that is being loaded.",
+                    "type": "Object"
+                },
+                {
+                    "name": "progress",
+                    "description": "The amount the item has been loaded (between 0 and 1).",
+                    "type": "Number"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1747,
+            "description": "Dispatch a fileload event. Please see the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}} event for\ndetails on the event payload.",
+            "itemtype": "method",
+            "name": "_sendFileComplete",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The item that is being loaded.",
+                    "type": "Object"
+                },
+                {
+                    "name": "loader",
+                    "description": "",
+                    "type": "TagLoader | XHRLoader"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1772,
+            "description": "Dispatch a filestart event immediately before a file starts to load. Please see the {{#crossLink \"LoadQueue/filestart:event\"}}{{/crossLink}}\nevent for details on the event payload.",
+            "itemtype": "method",
+            "name": "_sendFileStart",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The item that is being loaded.",
+                    "type": "Object"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/LoadQueue.js",
+            "line": 1785,
+            "description": "REMOVED.  Use createjs.proxy instead",
+            "itemtype": "method",
+            "name": "proxy",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "The function to call",
+                    "type": "Function"
+                },
+                {
+                    "name": "scope",
+                    "description": "The scope to call the method name on",
+                    "type": "Object"
+                }
+            ],
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "deprecated": true,
+            "deprecationMessage": "In favour of the createjs.proxy method (see LoadQueue source).",
+            "class": "LoadQueue",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/SamplePlugin.js",
+            "line": 1,
+            "class": "SamplePlugin",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/SamplePlugin.js",
+            "line": 48,
+            "description": "When a plugin is installed, this method will be called to let PreloadJS know when to invoke the plugin.\n\nPreloadJS expects this method to return an object containing:\n<ul>\n    <li><strong>callback:</strong> The function to call on the plugin class right before an item is loaded. Check\n    out the {{#crossLink \"SamplePlugin/preloadHandler\"}}{{/crossLink}} method for more information. The callback\n    is automatically called in the scope of the plugin.</li>\n    <li><strong>types:</strong> An array of recognized PreloadJS load types to handle. Supported load types are\n    \"binary\",\"image\", \"javascript\", \"json\", \"jsonp\", \"sound\", \"svg\", \"text\", and \"xml\".</li>\n    <li><strong>extensions:</strong> An array of strings containing file extensions to handle, such as \"jpg\",\n    \"mp3\", etc. This only fires if an applicable type handler is not found by the plugin.</li>\n</ul>\n\nNote that currently, PreloadJS only supports a single handler for each extension or file type.\n\n<h4>Example</h4>\n\n     // Check out the SamplePlugin source for a more complete example.\n     SamplePlugin.getPreloadHandlers = function() {\n         return {\n             callback: SamplePlugin.preloadHandler,\n             extensions: [\"jpg\", \"jpeg\", \"png\", \"gif\"]\n         }\n     }\n\nIf a plugin provides both \"type\" and \"extension\" handlers, the type handler will take priority, and will only\nfire once per file. For example if you have a handler for type=sound, and for extension=mp3, the callback will\nfire when it matches the type.",
+            "itemtype": "method",
+            "name": "getPreloadHandlers",
+            "return": {
+                "description": "An object defining a callback, type handlers, and extension handlers (see description)",
+                "type": "Object"
+            },
+            "class": "SamplePlugin",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/SamplePlugin.js",
+            "line": 89,
+            "description": "This is a sample method to show how to handle the callback specified in the {{#crossLink \"LoadQueue/getPreloadHandlers\"}}{{/crossLink}}.\nRight before a file is loaded, if a plugin for the file type or extension is found, then the callback for that\nplugin will be invoked. The arguments provided match most of those specified in load items passed into {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}}:\n<ul>\n    <li><strong>src:</strong> The item source</li>\n    <li><strong>type:</strong> The item type</li>\n    <li><strong>id:</strong> The item id</li>\n    <li><strong>data:</strong> Arbitrary data attached to the item</li>\n</li>\nTwo additional arguments are appended:\n<ul>\n    <li><strong>basePath:</strong> A path that is prepended to all items loaded with PreloadJS. <strong>Note\n    that basePath is deprecated, but is left in for backwards compatibility</strong></li>\n    <li><strong>queue:</strong> The {{#crossLink \"LoadQueue\"}}{{/crossLink}} instance that is loading the\n    item.</li>\n</ul>\n\nThis gives the plugin an opportunity to modify the load item, or even cancel the load. The return value of the\ncallback determines how PreloadJS will handle the file:\n<ul>\n    <li><strong>false:</strong> Skip the item. This allows plugins to determine if a file should be loaded or\n    not. For example,the plugin could determine if a file type is supported at all on the current system, and\n    skip those that do not.</li>\n    <li><strong>true:</strong> Continue normally. The plugin will not affect the load.</li>\n</ul>\n\nAn object can also be returned which has properties that can override the existing load object. The return object\ncan include modified `src` and `id` parameters, as well as \"tag\" and \"completeHandler\" properties:\n<ul>\n    <li><strong>tag:</strong> a JavaScript object that will handle the actual loading of the file. This is\n    modeled after HTML image &amp; audio tags, and must contain a <code>load()</code> method or a `src` setter,\n    as well as and <code>onload</code> and <code>onerror</code> callback.</li>\n    <li><strong>completeHandler:</strong> A method to call on the plugin once the item has been loaded. This is\n    useful to provide any necessary post-load functionality. Check out the {{#crossLink \"SamplePlugin/fileLoadHandler\"}}{{/crossLink}}\n    for more information.</li>\n</ul>\n\n<h4>Example</h4>\n\n     //Check out the SamplePlugin source for a more complete example.\n\n     // Cancel a load\n     SamplePlugin.preloadHandler = function(src, type, id, data, basePath, queue) {\n         if (id.indexOf(\"thumb\") { return false; } // Don't load items like \"image-thumb.png\"\n         return true;\n     }\n\n     // Specify a completeHandler\n     SamplePlugin.preloadHandler = function(src, type, id, data, basePath, queue) {\n         return {\n             completeHandler: SamplePlugin.fileLoadHandler\n         };\n     }",
+            "itemtype": "method",
+            "name": "preloadHandler",
+            "params": [
+                {
+                    "name": "src",
+                    "description": "The path to the file, as specified by the developer, without a base path.",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "The file type, which is either passed in by the developer, or determined based on the\nextension. Supported load types are \"binary\",\"image\", \"javascript\", \"json\", \"jsonp\", \"sound\", \"svg\", \"text\", and\n\"xml\". This value may be null if the extension is not recognized by PreloadJS.",
+                    "type": "String"
+                },
+                {
+                    "name": "id",
+                    "description": "The string-based ID, which is optionally passed in by the user.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "Arbitrary data optionally attached to the load item by the user, which is maintained until the\nitem is loaded and returned to the user from PreloadJS.",
+                    "type": "*"
+                },
+                {
+                    "name": "basePath",
+                    "description": "A base path which is supplied to PreloadJS, which is prepended to the source of any\nload item.",
+                    "type": "String"
+                },
+                {
+                    "name": "queue",
+                    "description": "The {{#crossLink \"LoadQueue\"}}{{/crossLink}} instance that is preloading the item.",
+                    "type": "LoadQueue"
+                }
+            ],
+            "return": {
+                "description": "How PreloadJS should handle the load. See the main description for more info.",
+                "type": "Boolean|Object"
+            },
+            "class": "SamplePlugin",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/SamplePlugin.js",
+            "line": 175,
+            "description": "This is a sample method to show a `completeHandler`, which is optionally specified by the return object in the\n{{#crossLink \"SamplePlugin/preloadHandler\"}}{{/crossLink}}. This method is called after the item has completely\nloaded, but before the {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}} event is dispatched from the\n{{#crossLink \"LoadQueue\"}}{{/crossLink}}.",
+            "itemtype": "method",
+            "name": "fileLoadHandler",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "A {{#crossLink \"LoadQueue/fileload:event\"}}{{/crossLink}} event.",
+                    "type": "Object"
+                }
+            ],
+            "class": "SamplePlugin",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 63,
+            "description": "The timeout that is fired if nothing is loaded after a certain delay. See the <code>LoadQueue.LOAD_TIMEOUT</code>\nfor the timeout duration.",
+            "itemtype": "property",
+            "name": "_loadTimeout",
+            "type": "{Number}",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 72,
+            "description": "A reference to a bound function, which we need in order to properly remove the event handler when the load\ncompletes.",
+            "itemtype": "property",
+            "name": "_tagCompleteProxy",
+            "type": "{Function}",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 81,
+            "description": "Determines if the load item is an audio tag, since we take some specific approaches to properly load audio.",
+            "itemtype": "property",
+            "name": "_isAudio",
+            "type": "{Boolean}",
+            "default": "false",
+            "access": "protected",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 90,
+            "description": "The HTML tag or JavaScript object this loader uses to preload content. Note that a tag may be a custom object\nthat matches the API of an HTML tag (load method, onload callback). For example, flash audio from SoundJS passes\nin a custom object to handle preloading for Flash audio and WebAudio.",
+            "itemtype": "property",
+            "name": "_tag",
+            "type": "{HTMLAudioElement | Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 100,
+            "description": "When loading a JSONP request this will be the parsed JSON result.",
+            "type": "{Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 116,
+            "description": "Get the loaded content. This is usually an HTML tag or other tag-style object that has been fully loaded. If the\nloader is not complete, this will be null.",
+            "itemtype": "method",
+            "name": "getResult",
+            "return": {
+                "description": "The loaded and parsed content.",
+                "type": "HTMLImageElement | HTMLAudioElement | Object"
+            },
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 217,
+            "description": "Handle an audio timeout. Newer browsers get a callback from the tags, but older ones may require a setTimeout\nto handle it. The setTimeout is always running until a response is handled by the browser.",
+            "itemtype": "method",
+            "name": "_handleTimeout",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 230,
+            "description": "Handle a stalled audio event. The main place we seem to get these is with HTMLAudio in Chrome when we try and\nplayback audio that is already in a load, but not complete.",
+            "itemtype": "method",
+            "name": "_handleStalled",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 240,
+            "description": "Handle an error event generated by the tag.",
+            "itemtype": "method",
+            "name": "_handleError",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 253,
+            "description": "Handle the readyStateChange event from a tag. We sometimes need this in place of the onload event (mainly SCRIPT\nand LINK tags), but other cases may exist.",
+            "itemtype": "method",
+            "name": "_handleReadyStateChange",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 270,
+            "description": "Handle a load (complete) event. This is called by tag callbacks, but also by readyStateChange and canPlayThrough\nevents. Once loaded, the item is dispatched to the {{#crossLink \"LoadQueue\"}}{{/crossLink}}.",
+            "itemtype": "method",
+            "name": "_handleLoad",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "A load event from a tag. This is sometimes called from other handlers without an event.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/TagLoader.js",
+            "line": 305,
+            "description": "Clean up the loader.\nThis stops any timers and removes references to prevent errant callbacks and clean up memory.",
+            "itemtype": "method",
+            "name": "_clean",
+            "access": "private",
+            "tagname": "",
+            "class": "TagLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 61,
+            "description": "A reference to the XHR request used to load the content.",
+            "itemtype": "property",
+            "name": "_request",
+            "type": "{XMLHttpRequest | XDomainRequest | ActiveX.XMLHTTP}",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 69,
+            "description": "A manual load timeout that is used for browsers that do not support the onTimeout event on XHR (XHR level 1,\ntypically IE9).",
+            "itemtype": "property",
+            "name": "_loadTimeout",
+            "type": "{Number}",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 78,
+            "description": "The browser's XHR (XMLHTTPRequest) version. Supported versions are 1 and 2. There is no official way to detect\nthe version, so we use capabilities to make a best guess.",
+            "itemtype": "property",
+            "name": "_xhrLevel",
+            "type": "{Number}",
+            "default": "1",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 88,
+            "description": "The response of a loaded file. This is set because it is expensive to look up constantly. This property will be\nnull until the file is loaded.",
+            "itemtype": "property",
+            "name": "_response",
+            "type": "{mixed}",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 97,
+            "description": "The response of the loaded file before it is modified. In most cases, content is converted from raw text to\nan HTML tag or a formatted object which is set to the <code>result</code> property, but the developer may still\nwant to access the raw content as it was loaded.",
+            "itemtype": "property",
+            "name": "_rawResponse",
+            "type": "{String|Object}",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 107,
+            "description": "See {{#crossLink \"LoadQueue/_crossOrigin:property\"}}{{/crossLink}}",
+            "itemtype": "property",
+            "name": "_crossOrigin",
+            "type": "{String}",
+            "defaultvalue": "\"\"",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 125,
+            "description": "Look up the loaded result.",
+            "itemtype": "method",
+            "name": "getResult",
+            "params": [
+                {
+                    "name": "rawResult",
+                    "description": "Return a raw result instead of a formatted result. This applies to content\nloaded via XHR such as scripts, XML, CSS, and Images. If there is no raw result, the formatted result will be\nreturned instead.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "A result object containing the content that was loaded, such as:\n<ul>\n     <li>An image tag (&lt;image /&gt;) for images</li>\n     <li>A script tag for JavaScript (&lt;script /&gt;). Note that scripts loaded with tags may be added to the\n     HTML head.</li>\n     <li>A style tag for CSS (&lt;style /&gt;)</li>\n     <li>Raw text for TEXT</li>\n     <li>A formatted JavaScript object defined by JSON</li>\n     <li>An XML document</li>\n     <li>An binary arraybuffer loaded by XHR</li>\n</ul>\nNote that if a raw result is requested, but not found, the result will be returned instead.",
+                "type": "Object"
+            },
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 201,
+            "description": "Get all the response headers from the XmlHttpRequest.\n\n<strong>From the docs:</strong> Return all the HTTP headers, excluding headers that are a case-insensitive match\nfor Set-Cookie or Set-Cookie2, as a single string, with each header line separated by a U+000D CR U+000A LF pair,\nexcluding the status line, and with each header name and header value separated by a U+003A COLON U+0020 SPACE\npair.",
+            "itemtype": "method",
+            "name": "getAllResponseHeaders",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "since": "0.4.1",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 220,
+            "description": "Get a specific response header from the XmlHttpRequest.\n\n<strong>From the docs:</strong> Returns the header field value from the response of which the field name matches\nheader, unless the field name is Set-Cookie or Set-Cookie2.",
+            "itemtype": "method",
+            "name": "getResponseHeader",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "The header name to retrieve.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "since": "0.4.1",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 238,
+            "description": "The XHR request has reported progress.",
+            "itemtype": "method",
+            "name": "_handleProgress",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR progress event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 255,
+            "description": "The XHR request has reported a load start.",
+            "itemtype": "method",
+            "name": "_handleLoadStart",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR loadStart event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 266,
+            "description": "The XHR request has reported an abort event.",
+            "itemtype": "method",
+            "name": "handleAbort",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR abort event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 279,
+            "description": "The XHR request has reported an error event.",
+            "itemtype": "method",
+            "name": "_handleError",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR error event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 292,
+            "description": "The XHR request has reported a readyState change. Note that older browsers (IE 7 & 8) do not provide an onload\nevent, so we must monitor the readyStateChange to determine if the file is loaded.",
+            "itemtype": "method",
+            "name": "_handleReadyStateChange",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR readyStateChange event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 305,
+            "description": "The XHR request has completed. This is called by the XHR request directly, or by a readyStateChange that has\n<code>request.readyState == 4</code>. Only the first call to this method will be processed.",
+            "itemtype": "method",
+            "name": "_handleLoad",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR load event.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 331,
+            "description": "The XHR request has timed out. This is called by the XHR request directly, or via a <code>setTimeout</code>\ncallback.",
+            "itemtype": "method",
+            "name": "_handleTimeout",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The XHR timeout event. This is occasionally null when called by the backup setTimeout.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 348,
+            "description": "Determine if there is an error in the current load. This checks the status of the request for problem codes. Note\nthat this does not check for an actual response. Currently, it only checks for 404 or 0 error code.",
+            "itemtype": "method",
+            "name": "_checkError",
+            "return": {
+                "description": "If the request status returns an error code.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 367,
+            "description": "Validate the response. Different browsers have different approaches, some of which throw errors when accessed\nin other browsers. If there is no response, the <code>_response</code> property will remain null.",
+            "itemtype": "method",
+            "name": "_getResponse",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 401,
+            "description": "Create an XHR request. Depending on a number of factors, we get totally different results.\n<ol><li>Some browsers get an <code>XDomainRequest</code> when loading cross-domain.</li>\n     <li>XMLHttpRequest are created when available.</li>\n     <li>ActiveX.XMLHTTP objects are used in older IE browsers.</li>\n     <li>Text requests override the mime type if possible</li>\n     <li>Origin headers are sent for crossdomain requests in some browsers.</li>\n     <li>Binary loads set the response type to \"arraybuffer\"</li></ol>",
+            "itemtype": "method",
+            "name": "_createXHR",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "The requested item that is being loaded.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "If an XHR request or equivalent was successfully created.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 481,
+            "description": "A request has completed (or failed or canceled), and needs to be disposed.",
+            "itemtype": "method",
+            "name": "_clean",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 500,
+            "description": "Generate a tag for items that can be represented as tags. For example, IMAGE, SCRIPT, and LINK. This also handles\nXML and SVG objects.",
+            "itemtype": "method",
+            "name": "_generateTag",
+            "return": {
+                "description": "If a tag was generated and is ready for instantiation. If it still needs processing, this\nmethod returns false.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 581,
+            "description": "Parse XML using the DOM. This is required when preloading XML or SVG.",
+            "itemtype": "method",
+            "name": "_parseXML",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "The raw text or XML that is loaded by XHR.",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "The mime type of the XML.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "An XML document.",
+                "type": "XML"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 606,
+            "description": "A generated tag is now ready for use.",
+            "itemtype": "method",
+            "name": "_handleTagReady",
+            "access": "private",
+            "tagname": "",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/XHRLoader.js",
+            "line": 623,
+            "description": "Include json2 here, to correctly parse json.\nUsed on browsers that don't have a native JSON object.",
+            "class": "XHRLoader",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/version.js",
+            "line": 16,
+            "description": "The version string for this release.",
+            "itemtype": "property",
+            "name": "version",
+            "type": "String",
+            "static": 1,
+            "class": "PreloadJS",
+            "module": "PreloadJS"
+        },
+        {
+            "file": "preloadjs/version.js",
+            "line": 24,
+            "description": "The build date for this release in UTC format.",
+            "itemtype": "property",
+            "name": "buildDate",
+            "type": "String",
+            "static": 1,
+            "class": "PreloadJS",
+            "module": "PreloadJS"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " preloadjs/AbstractLoader.js:355"
+        },
+        {
+            "message": "unknown tag: defaultvalue",
+            "line": " preloadjs/LoadQueue.js:423"
+        },
+        {
+            "message": "unknown tag: defaultvalue",
+            "line": " preloadjs/XHRLoader.js:107"
+        },
+        {
+            "message": "Missing item type\nGet a reference to the manifest item that is loaded by this loader. In most cases this will be the value that was\npassed into {{#crossLink \"LoadQueue\"}}{{/crossLink}} using {{#crossLink \"LoadQueue/loadFile\"}}{{/crossLink}} or\n{{#crossLink \"LoadQueue/loadManifest\"}}{{/crossLink}}. However if only a String path was passed in, then it will\nbe an Object created by the LoadQueue.",
+            "line": " preloadjs/AbstractLoader.js:191"
+        },
+        {
+            "message": "Missing item type\nTime in milliseconds to assume a load has failed.",
+            "line": " preloadjs/LoadQueue.js:271"
+        },
+        {
+            "message": "Missing item type\nDefines a POST request, use for a method value when loading data.",
+            "line": " preloadjs/LoadQueue.js:397"
+        },
+        {
+            "message": "Missing item type\nDefines a GET request, use for a method value when loading data.",
+            "line": " preloadjs/LoadQueue.js:404"
+        },
+        {
+            "message": "Missing item type\nDetermine the type of the object using common extensions. Note that the type can be passed in with the load item\nif it is an unusual extension.",
+            "line": " preloadjs/LoadQueue.js:1684"
+        },
+        {
+            "message": "Missing item type",
+            "line": " preloadjs/SamplePlugin.js:1"
+        },
+        {
+            "message": "Missing item type\nWhen loading a JSONP request this will be the parsed JSON result.",
+            "line": " preloadjs/TagLoader.js:100"
+        },
+        {
+            "message": "Missing item type\nInclude json2 here, to correctly parse json.\nUsed on browsers that don't have a native JSON object.",
+            "line": " preloadjs/XHRLoader.js:623"
+        }
+    ]
+}

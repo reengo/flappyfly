@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/yui-cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
+    <script src="../assets/js/yui-source.js"></script>
+	<title>PreloadJS v0.4.1 API Documentation : PreloadJS</title>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><a href="http://www.createjs.com/#!/PreloadJS"><img src="../assets/docs-icon-PreloadJS.png" title="PreloadJS"></a></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Documentation for: 0.4.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/AbstractLoader.html">AbstractLoader</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/EventDispatcher.html">EventDispatcher</a></li>
+            
+                <li><a href="../classes/LoadQueue.html">LoadQueue</a></li>
+            
+                <li><a href="../classes/PreloadJS.html">PreloadJS</a></li>
+            
+                <li><a href="../classes/SamplePlugin.html">SamplePlugin</a></li>
+            
+                <li><a href="../classes/TagLoader.html">TagLoader</a></li>
+            
+                <li><a href="../classes/Utility Methods.html">Utility Methods</a></li>
+            
+                <li><a href="../classes/XHRLoader.html">XHRLoader</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/CreateJS.html">CreateJS</a></li>
+            
+                <li><a href="../modules/PreloadJS.html">PreloadJS</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+            <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>PreloadJS Module</h1>
+<div class="box clearfix meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/preloadjs_version.js.html#l6"><code>PreloadJS:6</code></a>
+        </div>
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>PreloadJS provides a consistent way to preload content for use in HTML applications. Preloading can be done using
+HTML tags, as well as XHR.</p>
+<p>By default, PreloadJS will try and load content using XHR, since it provides better support for progress and
+completion events, <b>however due to cross-domain issues, it may still be preferable to use tag-based loading
+instead</b>. Note that some content requires XHR to work (plain text, web audio), and some requires tags (HTML audio).
+Note this is handled automatically where possible.</p>
+<p>PreloadJS currently supports all modern browsers, and we have done our best to include support for most older
+browsers. If you find an issue with any specific OS/browser combination, please visit <a href="http://community.createjs.com/">http://community.createjs.com/</a>
+and report it.</p>
+<h4>Getting Started</h4>
+To get started, check out the <a href="../classes/LoadQueue.html" class="crosslink">LoadQueue</a> class, which includes a quick overview of how
+to load files and process results.
+
+<h4>Example</h4>
+
+<pre class="code prettyprint"><code> var queue = new createjs.LoadQueue();
+ queue.installPlugin(createjs.Sound);
+ queue.on("complete", handleComplete, this);
+ queue.loadFile({id:"sound", src:"http://path/to/sound.mp3"});
+ queue.loadManifest([
+     {id: "myImage", src:"path/to/myImage.jpg"}
+ ]);
+ function handleComplete() {
+     createjs.Sound.play("sound");
+     var image = queue.getResult("myImage");
+     document.body.appendChild(image);
+ }</code></pre>
+<p><b>Important note on plugins:</b> Plugins must be installed <i>before</i> items are added to the queue, otherwise
+they will not be processed, even if the load has not actually kicked off yet. Plugin functionality is handled when
+the items are added to the LoadQueue.</p>
+<p><h4>Browser Support</h4>
+PreloadJS is partially supported in all browsers, and fully supported in all modern browsers. Known exceptions:</p>
+<ul><li>XHR loading of any content will not work in many older browsers (See a matrix here: <a href="http://caniuse.com/xhr2" target="_blank"><a href="http://caniuse.com/xhr2">http://caniuse.com/xhr2</a></a>).
+     In many cases, you can fall back on tag loading (images, audio, CSS, scripts, SVG, and JSONP). Text and
+     WebAudio will only work with XHR.</li>
+     <li>Some formats have poor support for complete events in IE 6, 7, and 8 (SVG, tag loading of scripts, XML/JSON)</li>
+     <li>Opera has poor support for SVG loading with XHR</li>
+     <li>CSS loading in Android and Safari will not work with tags (currently, a workaround is in progress)</li>
+     <li>Local loading is not permitted with XHR, which is required by some file formats. When testing local content
+     use either a local server, or enable tag loading, which is supported for most formats. See <a href="../classes/LoadQueue.html#method_setUseXHR" class="crosslink">setUseXHR</a>
+     for more information.</li>
+</ul>
+
+<p><h4>Cross-domain Loading</h4>
+Most content types can be loaded cross-domain, as long as the server supports CORS. PreloadJS also has internal
+support for images served from a CORS-enabled server, via the <code>crossOrigin</code> argument on the <a href="../classes/LoadQueue.html" class="crosslink">LoadQueue</a>
+constructor. If set to a string value (such as "Anonymous"), the "crossOrigin" property of images generated by
+PreloadJS is set to that value. Please note that setting a <code>crossOrigin</code> value on an image that is served from a
+server without CORS will cause other errors. For more info on CORS, visit <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">https://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a>.</p>
+
+</div>
+
+
+
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
+
+            <ul class="module-classes">
+            
+                <li class="module-class">
+                    <a href="../classes/AbstractLoader.html">
+                        AbstractLoader
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/LoadQueue.html">
+                        LoadQueue
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/PreloadJS.html">
+                        PreloadJS
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/SamplePlugin.html">
+                        SamplePlugin
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/TagLoader.html">
+                        TagLoader
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/XHRLoader.html">
+                        XHRLoader
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
+
+    <div class="yui3-u-1-2">
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

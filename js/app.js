@@ -20,6 +20,7 @@ define('App', [
 
 			Preloader.enter(this.canvas, this.stage);
 			Preloader.onExit = function(assets){
+				console.log(this.assets);
 				that.assets = assets;				
 				that.gotoMenu();
 			}
